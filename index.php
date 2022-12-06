@@ -27,7 +27,7 @@ switch($actionParams[0])
                 // $view =
                 break;
             case 'addLink':
-                // $view =
+                $view = $controller->addLink($templating, $router);
                 break;
             default:
                 $view = $controller->index($templating, $router);

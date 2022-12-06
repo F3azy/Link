@@ -8,7 +8,7 @@ class Autoloader
     public static function register()
     {
         spl_autoload_register(function ($class) {
-            $file = str_replace('App\\', 'src\\', $class);
+            $file = str_replace('App\\', 'protected\\', $class);
             $file = str_replace('\\', DIRECTORY_SEPARATOR, $file).'.php';
             $file = __DIR__ . DIRECTORY_SEPARATOR . $file;
             if (file_exists($file)) {

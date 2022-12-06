@@ -6,6 +6,7 @@ cutButton.disabled= true;
 
 originalLinkInput.addEventListener("input", function() {
     this.value = this.value.trim();
+    this.value = this.value.split(" ").join("");
     if(this.value.length == 0) {
         cutButton.disabled = true;
     } else {
@@ -15,6 +16,7 @@ originalLinkInput.addEventListener("input", function() {
 
 customLinkInput.addEventListener("input", function() {
     this.value = this.value.trim();
+    this.value = this.value.split(" ").join("");
     if(this.value.length == 0 || this.value.length >=4) {
         cutButton.disabled = false;
     } else {

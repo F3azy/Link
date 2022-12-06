@@ -3,8 +3,33 @@
 // /** @var \App\Model\Post[] $posts */
 /** @var \App\Service\Router $router */
 
+session_start();
+
+if(isset($_POST['originalLink']) && !empty($_POST['originalLink'])) {
+    if(isset($_POST['customLink']) && !empty($_POST['customLink'])) {
+        $_SESSION['shortUrl'] = "www.linker.pl/" . str_replace(' ', '', $_POST['customLink']);
+    }
+    else {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        $length = rand(4,10);
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        $_SESSION['shortUrl']  = "www.linker.pl/" . $randomString;
+    }
+
+    header("Location: ".$router->generatePath('public-addLink'));
+    exit;
+} 
+
+
+
 $title = 'Shorten';
 $bodyClass = 'addLinkPublic';
+
 
 ob_start(); ?>
 
@@ -13,11 +38,11 @@ ob_start(); ?>
 
         <p>LINK-(R) is a link management service which allows you to ...</p>
 
-        <form action="">
+        <form action="" method="post">
             <div class="publicShortenInput">
-                <input type="text" placeholder="Input link to shorten..."> 
-                <input type="text" placeholder="Custom link(optional)"> 
-                <button>Shorten</button>
+                <input id="originalLink" type="text" name="originalLink" placeholder="Input link to shorten..."> 
+                <input id="customLink" type="text" name="customLink" placeholder="Custom link(optional)..."> 
+                <button id="shortenLinkButton">Shorten</button>
             </div>
         </form>
     </div>
@@ -179,6 +204,15 @@ ob_start(); ?>
             </svg>
         </div>
     </div>
+
+    <?php
+        if(isset($_SESSION['shortUrl']) && !empty($_SESSION['shortUrl'])) {
+            echo '<script>alert("'.$_SESSION['shortUrl'].'");</script>';
+            unset($_SESSION['shortUrl']);
+        }
+    ?>
+
+    <script src="../../js/publicAddLink.js"></script>
     
     <section class="curve-container">
         <div class="wave">

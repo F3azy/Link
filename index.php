@@ -7,14 +7,20 @@ $templating = new \App\Service\Templating();
 $router = new \App\Service\Router();
 
 $action = $_REQUEST['action'] ?? null;
-
-$actionParams = explode("-", $action) ?: null;
+if($action != null)
+    $actionParams = explode("-", $action) ?: null;
+else
+{
+    $actionParams = [];
+    $actionParams[0] = null;
+    $actionParams[1] = null;
+}
 
 switch($actionParams[0])
 {
     case null:
     case 'public':
-        // $controller = new \App\Controller\PublicController();
+        $controller = new \App\Controller\PublicController();
         switch($actionParams[1])
         {
             case 'login':
@@ -24,7 +30,7 @@ switch($actionParams[0])
                 // $view =
                 break;
             default:
-                // $view =
+                $view = $controller->index($templating, $router);
                 break;
         }
         break;

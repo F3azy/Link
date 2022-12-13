@@ -6,16 +6,19 @@ $bodyClass = 'index';
 
 ob_start(); ?>
 <body>
-    <h1>Witamy na stronie Linke&reg;</h1>
+    <h1>Witamy na stronie Linke&reg; (Widok na przekierowania)</h1>
+    <h2>Public</h2>
     <a href="<?= $router->generatePath('public-index') ?>">Index</a><br>
     <a href="<?= $router->generatePath('public-addLink') ?>">Add Link</a><br>
-    <a href="<?= $router->generatePath('public-login') ?>">Login</a><br>
+    <a href="<?= $router->generatePath('public-login') ?>">Login</a>
+    <h2>Private</h2>
     <a href="<?= $router->generatePath('private-home') ?>">Home</a><br>
     <a href="<?= $router->generatePath('private-links') ?>">Links</a><br>
     <a href="<?= $router->generatePath('private-mylinks') ?>">My Links</a><br>
     <a href="<?= $router->generatePath('private-addlink') ?>">Add Link</a><br>
-    <a href="<?= $router->generatePath('private-usersettings') ?>">User Settings</a><br>
-    <a href="<?= $router->generatePath('admin-index') ?>">Admin</a><br>
+    <a href="<?= $router->generatePath('private-usersettings') ?>">User Settings</a>
+    <h2>Admin</h2>
+    <a href="<?= $router->generatePath('admin-index') ?>">Admin</a>
 </body>
 
 <?php $main = ob_get_clean();

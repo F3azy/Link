@@ -24,10 +24,10 @@ switch($actionParams[0])
         switch($actionParams[1])
         {
             case 'login':
-                // $view =
+                $view = $controller->login($templating, $router);
                 break;
             case 'addLink':
-                // $view =
+                $view = $controller->addLink($templating, $router);
                 break;
             default:
                 $view = $controller->index($templating, $router);
@@ -35,29 +35,29 @@ switch($actionParams[0])
         }
         break;
     case 'private':
-        // $controller = new \App\Controller\PrivateController();
+        $controller = new \App\Controller\PrivateController();
         switch($actionParams[1])
         {
             case 'home':
-                // $view =
+                $view = $controller->home($templating, $router);
                 break;
             case 'links':
-                // $view =
+                $view = $controller->links($templating, $router);
                 break;
             case 'mylinks':
-                // $view =
+                $view = $controller->myLinks($templating, $router);
                 break;
             case 'addlink':
-                // $view =
+                $view = $controller->addLink($templating, $router);
                 break;
             case 'usersettings':
-                // $view =
+                $view = $controller->userSettings($templating, $router);
                 break;
         }
         break;
-    case 'admin-panel':
-        // $controller = new \App\Controller\AdminController();
-        // $view = controller->
+    case 'admin':
+        $controller = new \App\Controller\AdminController();
+        $view = $controller->index($templating, $router);
         break;
     default:
         $view = "Not found!";

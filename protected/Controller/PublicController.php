@@ -16,4 +16,19 @@ class PublicController
         return $html;
     }
 
+    public function addLink(Templating $templating, Router $router): ?string
+    {
+        $html = $templating->Render('public/addLink.html.php', [
+            'router' => $router
+        ]);
+        return $html;
+    }
+
+    public function login(Templating $templating, Router $router): ?string
+    {
+        $html = $templating->Render('public/login.html.php', [
+            'router' => $router
+        ]);
+        return $html;
+    }
 }

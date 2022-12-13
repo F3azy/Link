@@ -18,7 +18,7 @@ class PublicController
 
     public function addLink(Templating $templating, Router $router): ?string
     {
-        $html = $templating->Render('public/addLink.html.php', [
+        $html = $templating->Render('public/addlink.html.php', [
             'router' => $router
         ]);
         return $html;

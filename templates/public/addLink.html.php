@@ -39,7 +39,7 @@ ob_start(); ?>
         <p>LINK-(R) is a link management service which allows you to ...</p>
 
         <form action="" method="post">
-            <div class="publicShortenInput">
+            <div class="shortenInput">
                 <input id="originalLink" type="text" name="originalLink" placeholder="Input link to shorten..."> 
                 <input id="customLink" type="text" name="customLink" placeholder="Custom link(optional)..."> 
                 <button id="shortenLinkButton">Shorten</button>
@@ -212,7 +212,7 @@ ob_start(); ?>
         }
     ?>
 
-    <script src="../../js/publicAddLink.js"></script>
+    <script src="../../js/addLink.js"></script>
     
     <section class="curve-container">
         <div class="wave">

@@ -1,6 +1,6 @@
 <?php
 
-// /** @var \App\Model\Post[] $posts */
+ /** @var \App\Model\Link $link */
 /** @var \App\Service\Router $router */
 
 session_start();

@@ -1,6 +1,8 @@
 const originalLinkInput = document.getElementById("originalLink");
 const customLinkInput = document.getElementById("customLink");
 const cutButton = document.getElementById("shortenLinkButton");
+const passwordCheck = document.getElementById("passwordCheck");
+const password = document.getElementById("password");
 
 cutButton.disabled = true;
 

@@ -7,6 +7,7 @@ class Router
     {
         $query = $action ? http_build_query(array_merge(['action' => $action], $params)) : null;
         $path = "/index.php" . ($query ? "?$query" : null);
+        //$path = "/" . $action;
         return $path;
     }
 

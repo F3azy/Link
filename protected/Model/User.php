@@ -106,13 +106,13 @@ class User
         $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));
         $sql = 'SELECT * FROM users WHERE userID = :id';
         $statement = $pdo->prepare($sql);
-        $statement->execute(['userID' => $id]);
+        $statement->execute(['id' => $id]);
 
         $userArray = $statement->fetch(\PDO::FETCH_ASSOC);
         if (! $userArray) {
             return null;
         }
-        $user = Post::fromArray($userArray);
+        $user = User::fromArray($userArray);
 
         return $user;
     }

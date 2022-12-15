@@ -63,38 +63,44 @@ class Link
 
         return $this;
     }
-    public function getCreateDate(): ?\DateTimeInterface
+    public function getCreateDate(): ?string
     {
-        return $this->createDate;
+        $date = $this->createDate->format('Y-m-d H:m:s');
+        return $date;
     }
 
-    public function setCreateDate(?\DateTimeInterface $createDate): Link
+    public function setCreateDate(?string $createDate): Link
     {
-        $this->createDate = $createDate;
+        $date = new \DateTime($createDate);
+        $this->createDate = $date;
 
         return $this;
     }
 
-    public function getEditDate(): ?\DateTimeInterface
+    public function getEditDate(): ?string
     {
-        return $this->editDate;
+        $date = $this->editDate->format('Y-m-d H:m:s');
+        return $date;
     }
 
-    public function setEditDateDate(?\DateTimeInterface $editeDate): Link
+    public function setEditDateDate(?string $editeDate): Link
     {
-        $this->editDate = $editDate;
+        $date = new \DateTime($editeDate);
+        $this->editDate = $date;
 
         return $this;
     }
 
-    public function getLastVisitDate(): ?\DateTimeInterface
+    public function getLastVisitDate(): ?string
     {
-        return $this->lastVisitDate;
+        $date = $this->lastVisitDate->format('Y-m-d H:m:s');
+        return $date;
     }
 
-    public function setLastVisitDate(?\DateTimeInterface $lastVisitDate): Link
+    public function setLastVisitDate(?string $lastVisitDate): Link
     {
-        $this->lastVisitDate = $lastVisitDate;
+        $date = new \DateTime($lastVisitDate);
+        $this->lastVisitDate = $date;
 
         return $this;
     }
@@ -109,14 +115,16 @@ class Link
 
         return $this;
     }
-    public function getLifetime(): ?\DateTimeInterface
+    public function getLifetime(): ?string
     {
-        return $this->lifetime;
+        $date = $this->lastVisitDate->format('Y-m-d H:m:s');
+        return $date;
     }
 
-    public function setLifetime(?\DateTimeInterface $lifetime): Link
+    public function setLifetime(?string $lifetime): Link
     {
-        $this->lifetime = $lifetime;
+        $date = new \DateTime($lifetime);
+        $this->lifetime = $date;
 
         return $this;
     }
@@ -203,7 +211,7 @@ class Link
         if (! $linkArray) {
             return null;
         }
-        $link = Post::fromArray($linkArray);
+        $link = Link::fromArray($linkArray);
 
         return $link;
     }
@@ -230,7 +238,7 @@ class Link
 
             $this->setLinkID($pdo->lastInsertId());
         } else {
-            $sql = "UPDATE post SET  ogVersion  = :ogVersion ,shortVersion  = :shortVersion,linkPasswd  = :linkPasswd ,
+            $sql = "UPDATE links SET  ogVersion  = :ogVersion ,shortVersion  = :shortVersion,linkPasswd  = :linkPasswd ,
                     createDate  = :createDate ,editDate  = :editDate ,lastVisitDate  = :lastVisitDate ,
                     numOfVisits  = :numOfVisits ,lifetime  = :lifetime ,userID  = :userID WHERE linkID = :linkID";
             $statement = $pdo->prepare($sql);

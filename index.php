@@ -57,7 +57,14 @@ switch($actionParams[0])
         break;
     case 'admin':
         $controller = new \App\Controller\AdminController();
-        $view = $controller->index($templating, $router);
+        switch($actionParams[1])
+        {
+            case 'edit':
+                $view = $controller->edit($router);
+            default:
+                $view = $controller->index($templating, $router);
+                break;
+        }
         break;
     default:
         $view = "Not found!";

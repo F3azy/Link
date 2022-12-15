@@ -7,7 +7,7 @@ $bodyClass = 'index';
 ob_start(); ?>
 <body>
     Tu będzie zarządzanie aplikacją jako administrator
-
+    
     Wszystkie widoki:
     <h2>Public</h2>
     <a href="<?= $router->generatePath('public-index') ?>">Index</a><br>

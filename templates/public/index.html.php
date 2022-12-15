@@ -13,6 +13,9 @@ ob_start(); ?>
     </div>
     <h2>Jak to jest zrobione?</h2>
     <img src="/img/HowItIsDone.png">
+    <h2>Przekonaliśmy Cię?</h2>
+    <div>Daj nam szansę! Skorzystaj z podstawowej funkcjonalności <a href="<?= $router->generatePath('public-addLink') ?>">tutaj</a> lub dołącz do naszej
+    społeczności <a href="<?= $router->generatePath('public-login') ?>">tutaj</a>!
 </body>
 
 <?php $main = ob_get_clean();

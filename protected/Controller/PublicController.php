@@ -32,11 +32,10 @@ class PublicController
         return $html;
     }
 
-    public function signup(Templating $templating, Router $router): ?string
+    public function signup(Templating $templating, Router $router): void
     {
-        $html = $templating->Render('public/signup.html.php', [
+        $templating->Render('public/signup.html.php', [
             'router' => $router
         ]);
-        return $html;
     }
 }

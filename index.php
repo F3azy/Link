@@ -23,6 +23,8 @@ switch($actionParams[0])
         $controller = new \App\Controller\PublicController();
         switch($actionParams[1])
         {
+            case 'signup':
+                $controller->signup($templating, $router);
             case 'login':
                 $view = $controller->login($templating, $router);
                 break;

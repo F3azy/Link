@@ -1,5 +1,4 @@
 <?php
-
 if(isset($_POST["submit"])){
 
     //grab the data
@@ -9,8 +8,7 @@ if(isset($_POST["submit"])){
 
 
     //create Registercontroller class
-    include "../protected/Model/User.php"
-    include "../protected/Controller/RegisterController.php"
+    
     
     $signup = new RegisterController($userName,$pwd,$pwdRepeat);
 
@@ -20,6 +18,4 @@ if(isset($_POST["submit"])){
     //Going back to front page
     header("location: ".$router->generatePath('public-login'));
 }
-
-
 ?>

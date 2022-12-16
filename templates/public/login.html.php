@@ -31,7 +31,6 @@ ob_start();
     <form action="<?= $router->generatePath('public-signup')?>" method="post">
         <div class="container">
             <h1>Register</h1>
-            <p>"<?= __DIR__ ?>"</p>
             <p>Wypełnij dane, żeby się zajerestrować.</p>
             <hr>
             <label for="username"><b>Nazwa użytkownika</b></label>
@@ -42,6 +41,7 @@ ob_start();
 
             <label for="psw-repeat"><b>Powtórz hasło</b></label>
             <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
+            <input type="hidden" name="action" value="public-signup">
             <hr>
 
             <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>

@@ -61,6 +61,10 @@ switch($actionParams[0])
         {
             case 'edit':
                 $view = $controller->edit($router);
+                break;
+            case 'delete':
+                $view = $controller->delete($router);
+                break;
             default:
                 $view = $controller->index($templating, $router);
                 break;

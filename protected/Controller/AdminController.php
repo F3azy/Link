@@ -79,8 +79,26 @@ class AdminController
                     break;
             }
             $myModel->save();
-            $path = $router->generatePath('admin-index');
-            $router->redirect($path);
         }
+        $path = $router->generatePath('admin-index');
+        $router->redirect($path);
+    }
+    public function delete(Router $router)
+    {
+        $data = explode("|", $_COOKIE["deleteData"]);
+        $model = $data[0];
+        $index = (int) $data[1];
+        if($model == "user")
+            $myModel = User::find($index);
+        else if($model == "link")
+            $myModel = Link::find($index);
+        else
+            $myModel = null;
+        if($myModel != null)
+        {
+            $myModel->delete();
+        }
+        $path = $router->generatePath('admin-index');
+        $router->redirect($path);
     }
 }

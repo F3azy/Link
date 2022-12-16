@@ -220,7 +220,7 @@ class Link
     {
         $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));
         if (! $this->getLinkID()) {
-            $sql = "INSERT INTO link (linkID ,ogVersion ,shortVersion ,linkPasswd ,createDate ,editDate ,lastVisitDate ,numOfVisits ,lifetime ,userID ) 
+            $sql = "INSERT INTO links (linkID ,ogVersion ,shortVersion ,linkPasswd ,createDate ,editDate ,lastVisitDate ,numOfVisits ,lifetime ,userID ) 
             VALUES (:linkID, :ogVersion,:shortVersion,:linkPasswd,:createDate,:editDate,:lastVisitDate,:numOfVisits,:lifetime,:userID)";
             $statement = $pdo->prepare($sql);
             $statement->execute([

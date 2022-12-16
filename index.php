@@ -23,11 +23,16 @@ switch($actionParams[0])
         $controller = new \App\Controller\PublicController();
         switch($actionParams[1])
         {
+            case 'signup':
+                $controller->signup($templating, $router);
             case 'login':
                 $view = $controller->login($templating, $router);
                 break;
             case 'addLink':
                 $view = $controller->addLink($templating, $router);
+                break;
+            case 'loginUser':
+                $view = $controller->loginUser($templating, $router);
                 break;
             default:
                 $view = $controller->index($templating, $router);
@@ -52,6 +57,9 @@ switch($actionParams[0])
                 break;
             case 'usersettings':
                 $view = $controller->userSettings($templating, $router);
+                break;
+            case 'logOut':
+                $view = $controller->logOut($templating, $router);
                 break;
         }
         break;

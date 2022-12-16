@@ -215,7 +215,21 @@ class Link
 
         return $link;
     }
+    public static function findLinksOfUser($userid): ?array
+    {
+        $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));
+        $sql = 'SELECT * FROM links WHERE userID = :userid';
+        $statement = $pdo->prepare($sql);
+        $statement->execute(['userid' => $userid]);
 
+        $links = [];
+        $linksArray = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        foreach ($linksArray as $linkArray) {
+            $links[] = self::fromArray($linkArray);
+        }
+
+        return $links;
+    }
     public function save(): void
     {
         $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));

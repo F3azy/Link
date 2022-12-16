@@ -4,7 +4,9 @@ namespace App\Controller;
 use App\Exception\NotFoundException;
 use App\Service\Router;
 use App\Service\Templating;
+use App\Model\Link;
 use App\Model\User;
+
 // Kontroler publiczny
 class PublicController
 {
@@ -32,6 +34,15 @@ class PublicController
         return $html;
     }
 
+    public function redirect(string $redirectLink, Router $router)
+    {
+        $link = Link::findByShortName($redirectLink);
+        if($link == null)
+            $link = Link::findByFullName($redirectLink);
+        if($link != null)
+            header("Location: http://www." . $link->getOgVersion());
+        else
+        throw new NotFoundException("(Nie znaleziono takiej strony)");
     public function signup(Templating $templating, Router $router): void
     {
         $userName=$_POST["usernameRegister"];

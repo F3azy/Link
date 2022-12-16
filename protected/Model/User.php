@@ -69,7 +69,7 @@ class User
 
     public function fill($array): User
     {
-        if (isset($array['userID']) && ! $this->getUserID()) {
+        if (isset($array['userID']) && !$this->getUserID()) {
             $this->setUserID($array['userID']);
         }
         if (isset($array['userName'])) {
@@ -116,6 +116,21 @@ class User
 
         return $user;
     }
+    public static function findByUserName($username): ?User
+    {
+        $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));
+        $sql = 'SELECT * FROM users WHERE userName = :username';
+        $statement = $pdo->prepare($sql);
+        $statement->execute(['username' => $username]);
+
+        $userArray = $statement->fetch(\PDO::FETCH_ASSOC);
+        if (! $userArray) {
+            return null;
+        }
+        $user = User::fromArray($userArray);
+
+        return $user;
+    }
 
     public function save(): void
     {
@@ -141,7 +156,22 @@ class User
             ]);
         }
     }
-
+    public static function saveByValues($username,$passwd,$role): void
+    {
+        $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));
+        
+        $hashed_passwd = password_hash($passwd,PASSWORD_DEFAULT);
+        $sql = "INSERT INTO users (userName, userPasswd, role) VALUES (:userName, :userPasswd, :role)";
+        $statement = $pdo->prepare($sql);
+        $statement->execute([
+                'userName' => $username,
+                'userPasswd' => $hashed_passwd,
+                'role' => $role,
+            ]);
+        
+        
+    
+    }
     public function delete(): void
     {
         $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));

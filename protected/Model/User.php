@@ -121,7 +121,7 @@ class User
         $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));
         $sql = 'SELECT * FROM users WHERE userName = :username';
         $statement = $pdo->prepare($sql);
-        $statement->execute(['username' => $$username]);
+        $statement->execute(['username' => $username]);
 
         $userArray = $statement->fetch(\PDO::FETCH_ASSOC);
         if (! $userArray) {
@@ -159,18 +159,18 @@ class User
     public static function saveByValues($username,$passwd,$role): void
     {
         $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));
-        if (!$this->getUserID()) {
-            $hashed_passwd = password_hash($passwd,PASSWORD_DEFAULT);
-            $sql = "INSERT INTO users (userName, userPasswd, role) VALUES (:userName, :userPasswd, :role)";
-            $statement = $pdo->prepare($sql);
-            $statement->execute([
+        
+        $hashed_passwd = password_hash($passwd,PASSWORD_DEFAULT);
+        $sql = "INSERT INTO users (userName, userPasswd, role) VALUES (:userName, :userPasswd, :role)";
+        $statement = $pdo->prepare($sql);
+        $statement->execute([
                 'userName' => $username,
                 'userPasswd' => $hashed_passwd,
                 'role' => $role,
             ]);
-            echo "dziala";
-            $this->setUserID($pdo->lastInsertId());
-        } 
+        
+        
+    
     }
     public function delete(): void
     {

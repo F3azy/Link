@@ -1,10 +1,16 @@
 <?php
 /** @var \App\Service\Router $router */
-
+use App\Model\User;
 $title = 'Linke&reg;';
 $bodyClass = 'LoginAndRegistration';
-//User::saveByValues("Glitterfrost","Piotr123","normal");
-//echo($user->getUserName());
+//$name = 'Glitterfrost';
+//$user = User::findByUserName($name);
+session_start();
+// echo $user->getUserID();
+// echo $user->getUserName();
+echo '<pre>';
+var_dump($_SESSION);
+echo '</pre>';
 ob_start(); 
 
 ?>
@@ -12,7 +18,7 @@ ob_start();
     Tu będzie logowanie z opcją tworzenia konta
 
 
-    <form action="" method="post">
+    <form action="<?= $router->generatePath('public-loginUser')?>" method="post">
         <div class="container">
             <h1>Login</h1>
             <p>Wypełnij dane, żeby się zalogować.</p>

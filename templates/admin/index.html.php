@@ -24,7 +24,7 @@ ob_start(); ?>
                 <td contenteditable class="editable" id=<?php echo("user-" . $index . "-userName")?>><?php echo($user->getUserName()) ?></td>
                 <td contenteditable class="editable" id=<?php echo("user-" . $index . "-userPasswd")?>><?php echo($user->getUserPasswd()) ?></td>
                 <td contenteditable class="editable" id=<?php echo("user-" . $index . "-role")?>><?php echo($user->getRole()) ?></td>
-                <td><button class="delete-btn" id=<?php echo("user-" . $index . "-delete")?>>Action</button></td>
+                <td><button class="delete-btn" id=<?php echo("user-" . $index)?>>Delete</button></td>
             </tr>
         <?php endforeach; ?>
     </table>
@@ -56,7 +56,7 @@ ob_start(); ?>
                 <td contenteditable class="editable" id=<?php echo("link-" . $index . "-numOfVisits")?>><?php echo($link->getNumOfVisits()) ?></td>
                 <td contenteditable class="editable" id=<?php echo("link-" . $index . "-lifeTime")?>><?php echo($link->getLifetime()) ?></td>
                 <td contenteditable class="editable" id=<?php echo("link-" . $index . "-userId")?>><?php echo($link->getUserID()) ?></td>
-                <td><button class="delete-btn" id=<?php echo("link-" . $index . "-delete")?>>Delete</button></td>
+                <td><button class="delete-btn" id=<?php echo("link-" . $index)?>>Delete</button></td>
             </tr>
         <?php endforeach; ?>
     </table>
@@ -111,9 +111,22 @@ include __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'base.html.
         window.location.replace("/index.php?action=admin-edit");
     }
 
+    function deleteRow() {
+        let data = this.id.split("-");
+        let model = data[0];
+        let index = data[1];
+        createCookie("deleteData", model + "|" + index, 1);
+        window.location.replace("/index.php?action=admin-delete");
+    }
     let cells = document.getElementsByClassName("editable");
     for(let cell of cells)
     {
         cell.addEventListener("focusout", startEdit);
+    }
+
+    let buttons = document.getElementsByClassName("delete-btn");
+    for(let btn of buttons)
+    {
+        btn.addEventListener("click", deleteRow);
     }
 </script>

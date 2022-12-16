@@ -145,7 +145,7 @@ class User
     public function delete(): void
     {
         $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));
-        $sql = "DELETE FROM user WHERE userID = :userID";
+        $sql = "DELETE FROM users WHERE userID = :userID";
         $statement = $pdo->prepare($sql);
         $statement->execute([
             ':userID' => $this->getUserID(),

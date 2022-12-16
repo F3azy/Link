@@ -270,11 +270,11 @@ class Link
         $this->setOgVersion(null);
         $this->setShortVersion(null);
         $this->setLinkPasswd(null);
-        $this->setCreateDate(null);
-        $this->setEditDate(null);
-        $this->setLastVisitDate(null);
+        $this->setCreateDate(new \DateTime(null));
+        $this->setEditDate(new \DateTime(null));
+        $this->setLastVisitDate(new \DateTime(null));
         $this->setNumOfVisits(null);
-        $this->setLifetime(null);
+        $this->setLifetime(new \DateTime(null));
         $this->setUserID(null);
     }
 }

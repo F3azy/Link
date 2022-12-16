@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Exception\NotFoundException;
 use App\Service\Router;
 use App\Service\Templating;
+use App\Model\Link;
 
 // Kontroler publiczny
 class PublicController
@@ -30,5 +31,16 @@ class PublicController
             'router' => $router
         ]);
         return $html;
+    }
+
+    public function redirect(string $redirectLink, Router $router)
+    {
+        $link = Link::findByShortName($redirectLink);
+        if($link == null)
+            $link = Link::findByFullName($redirectLink);
+        if($link != null)
+            header("Location: http://www." . $link->getOgVersion());
+        else
+        throw new NotFoundException("(Nie znaleziono takiej strony)");
     }
 }

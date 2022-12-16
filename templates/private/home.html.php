@@ -1,5 +1,6 @@
 <?php
 /** @var \App\Service\Router $router */
+session_start();
 
 $title = 'Linke&reg;';
 $bodyClass = 'index';

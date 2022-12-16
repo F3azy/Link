@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Exception\NotFoundException;
 use App\Service\Router;
 use App\Service\Templating;
+use App\Model\Link;
 
 // Kontroler do którego ma się dostęp TYLKO po zweryfikowaniu kim się jest
 class PrivateController
@@ -18,8 +19,10 @@ class PrivateController
 
     public function links(Templating $templating, Router $router): ?string
     {
+        $links = Link::findAll();
         $html = $templating->Render('private/links.html.php', [
-            'router' => $router
+            'router' => $router,
+            'links' => $links
         ]);
         return $html;
     }

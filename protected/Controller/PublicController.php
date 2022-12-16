@@ -31,4 +31,12 @@ class PublicController
         ]);
         return $html;
     }
+
+    public function signup(Templating $templating, Router $router): ?string
+    {
+        $html = $templating->Render('public/signup.html.php', [
+            'router' => $router
+        ]);
+        return $html;
+    }
 }

@@ -215,7 +215,52 @@ class Link
 
         return $link;
     }
+    public static function findLinksOfUser($userid): ?array
+    {
+        $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));
+        $sql = 'SELECT * FROM links WHERE userID = :userid';
+        $statement = $pdo->prepare($sql);
+        $statement->execute(['userid' => $userid]);
 
+        $links = [];
+        $linksArray = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        foreach ($linksArray as $linkArray) {
+            $links[] = self::fromArray($linkArray);
+        }
+
+        return $links;
+    }
+    public static function findByShortName($shortName): ?Link
+    {
+        $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));
+        $sql = 'SELECT * FROM links WHERE shortVersion = :shortVersion';
+        $statement = $pdo->prepare($sql);
+        $statement->execute(['shortVersion' => $shortName]);
+
+        $linkArray = $statement->fetch(\PDO::FETCH_ASSOC);
+        if (! $linkArray) {
+            return null;
+        }
+        $link = Link::fromArray($linkArray);
+
+        return $link;
+    }
+
+    public static function findByFullName($fullName): ?Link
+    {
+        $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));
+        $sql = 'SELECT * FROM links WHERE ogVersion = :ogversion';
+        $statement = $pdo->prepare($sql);
+        $statement->execute(['ogversion' => $fullName]);
+
+        $linkArray = $statement->fetch(\PDO::FETCH_ASSOC);
+        if (! $linkArray) {
+            return null;
+        }
+        $link = Link::fromArray($linkArray);
+
+        return $link;
+    }
     public function save(): void
     {
         $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));

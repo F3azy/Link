@@ -58,6 +58,9 @@ switch($actionParams[0])
             case 'usersettings':
                 $view = $controller->userSettings($templating, $router);
                 break;
+            case 'logOut':
+                $view = $controller->logOut($templating, $router);
+                break;
         }
         break;
     case 'admin':

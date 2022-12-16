@@ -47,4 +47,10 @@ class PrivateController
         ]);
         return $html;
     }
+    public function logOut(Templating $templating, Router $router): void {
+        session_start();
+        session_unset();
+        session_destroy();
+        header("location: ".$router->generatePath('public-login'));
+    }
 }

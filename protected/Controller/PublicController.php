@@ -86,9 +86,11 @@ class PublicController
         session_start();
         $_SESSION["userID"] = $user->getUserID();
         $_SESSION["userName"] = $user->getUserName();
+        $_SESSION["role"] = $user->getRole();
         $_SESSION['loggedin'] = "loggedin";
        
     }
+    
 
 
     public function createUser($userName,$userPasswd,$pwdRepeat,$role,$router){

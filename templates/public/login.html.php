@@ -8,9 +8,7 @@ $bodyClass = 'LoginAndRegistration';
 session_start();
 // echo $user->getUserID();
 // echo $user->getUserName();
-echo '<pre>';
-var_dump($_SESSION);
-echo '</pre>';
+
 ob_start(); 
 
 ?>

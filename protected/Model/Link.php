@@ -63,38 +63,44 @@ class Link
 
         return $this;
     }
-    public function getCreateDate(): ?\DateTimeInterface
+    public function getCreateDate(): ?string
     {
-        return $this->createDate;
+        $date = $this->createDate->format('Y-m-d H:m:s');
+        return $date;
     }
 
-    public function setCreateDate(?\DateTimeInterface $createDate): Link
+    public function setCreateDate(?string $createDate): Link
     {
-        $this->createDate = $createDate;
+        $date = new \DateTime($createDate);
+        $this->createDate = $date;
 
         return $this;
     }
 
-    public function getEditDate(): ?\DateTimeInterface
+    public function getEditDate(): ?string
     {
-        return $this->editDate;
+        $date = $this->editDate->format('Y-m-d H:m:s');
+        return $date;
     }
 
     public function setEditDateDate(?\DateTimeInterface $editDate): Link
     {
-        $this->editDate = $editDate;
+        $date = new \DateTime($editeDate);
+        $this->editDate = $date;
 
         return $this;
     }
 
-    public function getLastVisitDate(): ?\DateTimeInterface
+    public function getLastVisitDate(): ?string
     {
-        return $this->lastVisitDate;
+        $date = $this->lastVisitDate->format('Y-m-d H:m:s');
+        return $date;
     }
 
-    public function setLastVisitDate(?\DateTimeInterface $lastVisitDate): Link
+    public function setLastVisitDate(?string $lastVisitDate): Link
     {
-        $this->lastVisitDate = $lastVisitDate;
+        $date = new \DateTime($lastVisitDate);
+        $this->lastVisitDate = $date;
 
         return $this;
     }
@@ -109,14 +115,16 @@ class Link
 
         return $this;
     }
-    public function getLifetime(): ?\DateTimeInterface
+    public function getLifetime(): ?string
     {
-        return $this->lifetime;
+        $date = $this->lastVisitDate->format('Y-m-d H:m:s');
+        return $date;
     }
 
-    public function setLifetime(?\DateTimeInterface $lifetime): Link
+    public function setLifetime(?string $lifetime): Link
     {
-        $this->lifetime = $lifetime;
+        $date = new \DateTime($lifetime);
+        $this->lifetime = $date;
 
         return $this;
     }
@@ -241,11 +249,56 @@ class Link
         if (! $linkArray) {
             return null;
         }
-        $link = Post::fromArray($linkArray);
+        $link = Link::fromArray($linkArray);
+
+        return $link;
+    }
+    public static function findLinksOfUser($userid): ?array
+    {
+        $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));
+        $sql = 'SELECT * FROM links WHERE userID = :userid';
+        $statement = $pdo->prepare($sql);
+        $statement->execute(['userid' => $userid]);
+
+        $links = [];
+        $linksArray = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        foreach ($linksArray as $linkArray) {
+            $links[] = self::fromArray($linkArray);
+        }
+
+        return $links;
+    }
+    public static function findByShortName($shortName): ?Link
+    {
+        $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));
+        $sql = 'SELECT * FROM links WHERE shortVersion = :shortVersion';
+        $statement = $pdo->prepare($sql);
+        $statement->execute(['shortVersion' => $shortName]);
+
+        $linkArray = $statement->fetch(\PDO::FETCH_ASSOC);
+        if (! $linkArray) {
+            return null;
+        }
+        $link = Link::fromArray($linkArray);
 
         return $link;
     }
 
+    public static function findByFullName($fullName): ?Link
+    {
+        $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));
+        $sql = 'SELECT * FROM links WHERE ogVersion = :ogversion';
+        $statement = $pdo->prepare($sql);
+        $statement->execute(['ogversion' => $fullName]);
+
+        $linkArray = $statement->fetch(\PDO::FETCH_ASSOC);
+        if (! $linkArray) {
+            return null;
+        }
+        $link = Link::fromArray($linkArray);
+
+        return $link;
+    }
     public function save(): void
     {
         $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));
@@ -300,11 +353,11 @@ class Link
         $this->setOgVersion(null);
         $this->setShortVersion(null);
         $this->setLinkPasswd(null);
-        $this->setCreateDate(null);
-        $this->setEditDate(null);
-        $this->setLastVisitDate(null);
+        $this->setCreateDate(new \DateTime(null));
+        $this->setEditDate(new \DateTime(null));
+        $this->setLastVisitDate(new \DateTime(null));
         $this->setNumOfVisits(null);
-        $this->setLifetime(null);
+        $this->setLifetime(new \DateTime(null));
         $this->setUserID(null);
     }
 }

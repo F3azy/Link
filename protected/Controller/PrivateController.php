@@ -35,8 +35,20 @@ class PrivateController
         return $html;
     }
 
-    public function addLink(Templating $templating, Router $router): ?string
+    public function addLink(?array $requestLink, Templating $templating, Router $router): ?string
     {
+        if ($requestLink) {
+            $link = Link::fromArray($requestLink);
+            // @todo missing validation
+            $link->save();
+
+            $path = $router->generatePath('private-index');
+            $router->redirect($path);
+            return null;
+        } else {
+            $link = new Link();
+        }
+
         $html = $templating->Render('private/addlink.html.php', [
             'router' => $router
         ]);

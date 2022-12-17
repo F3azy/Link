@@ -83,9 +83,9 @@ class Link
         return $date;
     }
 
-    public function setEditDateDate(?\DateTimeInterface $editDate): Link
+    public function setEditDateDate(?string $editDate): Link
     {
-        $date = new \DateTime($editeDate);
+        $date = new \DateTime($editDate);
         $this->editDate = $date;
 
         return $this;
@@ -202,19 +202,19 @@ class Link
             $this->setLinkPasswd("");
         }
         if (isset($array['createDate'])) {
-            $this->setCreateDate(new \DateTime($array['createDate']));
+            $this->setCreateDate($array['createDate']);
         }
         if (isset($array['editDate'])) {
-            $this->setEditDateDate(new \DateTime($array['editDate']));
+            $this->setEditDateDate($array['editDate']);
         }
         if (isset($array['lastVisitDate'])) {
-            $this->setLastVisitDate(new \DateTime($array['lastVisitDate']));
+            $this->setLastVisitDate($array['lastVisitDate']);
         }
         if (isset($array['numOfVisits'])) {
             $this->setNumOfVisits($array['numOfVisits']);
         }
         if (isset($array['lifetime'])) {
-            $this->setLifetime(new \DateTime($array['lifetime']));
+            $this->setLifetime($array['lifetime']);
         }
         if (isset($array['userID'])) {
             $this->setUserID($array['userID']);
@@ -311,11 +311,11 @@ class Link
                 'ogVersion'     => $this->getOgVersion(),
                 'shortVersion'  => $this->getShortVersion(),
                 'linkPasswd'    => $this->getLinkPasswd(),
-                'createDate'    => $this->getCreateDate()->format('Y-m-d H:i:s'),
-                'editDate'      => $this->getEditDate()->format('Y-m-d H:i:s'),
-                'lastVisitDate' => $this->getLastVisitDate()->format('Y-m-d H:i:s'),
+                'createDate'    => $this->getCreateDate(),
+                'editDate'      => $this->getEditDate(),
+                'lastVisitDate' => $this->getLastVisitDate(),
                 'numOfVisits'   => $this->getNumOfVisits(),
-                'lifetime'      => $this->getLifetime()->format('Y-m-d H:i:s'),
+                'lifetime'      => $this->getLifetime(),
                 'userID'        => $this->getUserID(),
             ]);
 

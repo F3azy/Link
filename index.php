@@ -61,7 +61,7 @@ else
                     $view = $controller->myLinks($templating, $router);
                     break;
                 case 'addlink':
-                    $view = $controller->addLink($templating, $router);
+                    $view = $controller->addLink($_REQUEST['link'] ?? null, $templating, $router);
                     break;
                 case 'usersettings':
                     $view = $controller->userSettings($templating, $router);

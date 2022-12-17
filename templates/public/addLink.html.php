@@ -1,29 +1,39 @@
 <?php
 
-// /** @var \App\Model\Post[] $posts */
+/** @var \App\Model\Link $link */
 /** @var \App\Service\Router $router */
 
 session_start();
 
-if(isset($_POST['originalLink']) && !empty($_POST['originalLink'])) {
-    if(isset($_POST['customLink']) && !empty($_POST['customLink'])) {
-        $_SESSION['shortUrl'] = "www.linker.pl/" . str_replace(' ', '', $_POST['customLink']);
-    }
-    else {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        $length = rand(4,10);
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
+// if(isset($_POST['originalLink']) && !empty($_POST['originalLink'])) {
+//     if(isset($_POST['customLink']) && !empty($_POST['customLink'])) {
+//         if(strlen($_POST['customLink']) >= 4) {
+//             $_SESSION['shortUrl'] = "www.linker.pl/" . str_replace(' ', '', $_POST['customLink']);
+//         }
+//         else {
+//             $_SESSION['Error'] = "<div>The given custom link is too short, must be at least 4 characters<div>";
+//         }
+//     }
+//     else {
+//         $_SESSION['shortUrl']  = "www.linker.pl/" . randomLink();
+//     }
 
-        $_SESSION['shortUrl']  = "www.linker.pl/" . $randomString;
-    }
+//     if(isset($_POST['passwordCheck']) && !empty($_POST['passwordCheck']) && $_POST['passwordCheck'] == "True") {
+//         if(isset($_POST['password']) && !empty($_POST['password'])) {
+//             if(strlen($_POST['password']) >= 8) {
+//                 $_SESSION['password'] = trim($_POST['password']);            }
+//             else {
+//                 $_SESSION['Error'] = "<div>The given password is too short, must be at least 8 characters<div>";
+//                 unset($_SESSION['shortUrl']);
+//             }
+//         }
+//     }
 
-    header("Location: ".$router->generatePath('public-addLink'));
-    exit;
-} 
+//     if($_SESSION['shortUrl']) {
+//         header("Location: ".$router->generatePath('public-addLink'));
+//         exit;
+//     }
+// } 
 
 
 
@@ -38,10 +48,26 @@ ob_start(); ?>
 
         <p>LINK-(R) is a link management service which allows you to ...</p>
 
-        <form action="" method="post">
-            <div class="publicShortenInput">
-                <input id="originalLink" type="text" name="originalLink" placeholder="Input link to shorten..."> 
-                <input id="customLink" type="text" name="customLink" placeholder="Custom link(optional)..."> 
+        <?php
+            if(isset($_SESSION['Error']) && !empty($_SESSION['Error'])) {
+                echo $_SESSION['Error'];
+                unset($_SESSION['Error']);
+            }
+        ?>
+
+        <form action="<?= $router->generatePath('public-addLink') ?>" method="post">
+            <div class="shortenInput">
+                <input id="originalLink" type="text" name="link[ogVersion]" placeholder="Input link to shorten..."> 
+                <input id="customLink" type="text" name="link[shortVersion]" minlength="4" placeholder="Custom link(optional)...">
+                <input type="hidden" name="link[linkPasswdCheck]" value="False">
+                <input type="hidden" name="link[linkPasswd]" value="">
+                <input type="hidden" name="link[createDate]" value="<?= (new \DateTime())->format('Y-m-d H:i:s'); ?>">
+                <input type="hidden" name="link[editDate]" value="<?= (new \DateTime())->format('Y-m-d H:i:s'); ?>">
+                <input type="hidden" name="link[lastVisitDate]" value="<?= (new \DateTime())->format('Y-m-d H:i:s'); ?>">
+                <input type="hidden" name="link[numOfVisits]" value="0">
+                <input type="hidden" name="link[lifetime]" value="<?= (new \DateTime())->format('Y-m-d H:i:s'); ?>">
+                <input type="hidden" name="link[userID]" value="0">
+                <input type="hidden" name="action" value="public-addLink"> 
                 <button id="shortenLinkButton">Shorten</button>
             </div>
         </form>
@@ -212,7 +238,7 @@ ob_start(); ?>
         }
     ?>
 
-    <script src="../../js/publicAddLink.js"></script>
+    <script src="../../js/addLink.js"></script>
     
     <section class="curve-container">
         <div class="wave">

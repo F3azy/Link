@@ -5,45 +5,33 @@
 
 session_start();
 
-function randomLink() {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $randomString = '';
-    $length = rand(4,10);
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, $charactersLength - 1)];
-    }
+// if(isset($_POST['originalLink']) && !empty($_POST['originalLink'])) {
+//     if(isset($_POST['customLink']) && !empty($_POST['customLink'])) {
+//         if(strlen($_POST['customLink']) >= 4) {
+//             $_SESSION['shortUrl'] = "www.linker.pl/" . str_replace(' ', '', $_POST['customLink']);
+//         }
+//         else {
+//             $_SESSION['Error'] = "<div>The given custom link is too short, must be at least 4 characters<div>";
+//         }
+//     }
+//     else {
+//         $_SESSION['shortUrl']  = "www.linker.pl/" . randomLink();
+//     }
 
-    return $randomString;
-}
+//     if(isset($_POST['passwordCheck']) && !empty($_POST['passwordCheck']) && $_POST['passwordCheck'] == "True") {
+//         if(isset($_POST['password']) && !empty($_POST['password'])) {
+//             if(strlen($_POST['password']) >= 8) {
+//                 $_SESSION['password'] = trim($_POST['password']);            }
+//             else {
+//                 $_SESSION['Error'] = "<div>The given password is too short, must be at least 8 characters<div>";
+//                 unset($_SESSION['shortUrl']);
+//             }
+//         }
+//     }
 
-if(isset($_POST['originalLink']) && !empty($_POST['originalLink'])) {
-    if(isset($_POST['customLink']) && !empty($_POST['customLink'])) {
-        if(strlen($_POST['customLink']) >= 4) {
-            $_SESSION['shortUrl'] = "www.linker.pl/" . str_replace(' ', '', $_POST['customLink']);
-        }
-        else {
-            $_SESSION['Error'] = "<div>The given custom link is too short, must be at least 4 characters<div>";
-        }
-    }
-    else {
-        $_SESSION['shortUrl']  = "www.linker.pl/" . randomLink();
-    }
-
-    if(isset($_POST['passwordCheck']) && !empty($_POST['passwordCheck']) && $_POST['passwordCheck'] == "True") {
-        if(isset($_POST['password']) && !empty($_POST['password'])) {
-            if(strlen($_POST['password']) >= 8) {
-                $_SESSION['password'] = trim($_POST['password']);            }
-            else {
-                $_SESSION['Error'] = "<div>The given password is too short, must be at least 8 characters<div>";
-                unset($_SESSION['shortUrl']);
-            }
-        }
-    }
-
-    header("Location: ".$router->generatePath('private-addlink'));
-    exit;
-} 
+//     header("Location: ".$router->generatePath('private-addlink'));
+//     exit;
+// } 
 
 
 
@@ -62,14 +50,21 @@ ob_start(); ?>
             }
         ?>
 
-        <form action="" method="post">
+        <form action="<?= $router->generatePath('public-addLink') ?>" method="post">
             <div class="shortenInput">
-                <input id="originalLink" type="text" name="originalLink" placeholder="Input link to shorten..."> 
-                <input id="customLink" type="text" name="customLink" minlength="4" placeholder="Custom link(optional)..."> 
+                <input id="originalLink" type="text" name="link[ogVersion]" placeholder="Input link to shorten..."> 
+                <input id="customLink" type="text" name="link[shortVersion]" minlength="4" placeholder="Custom link(optional)..."> 
                 <button id="shortenLinkButton">Shorten</button>
                 <label for="password">Protect with password:</label>
-                <input type="checkbox" id="passwordCheck" name="passwordCheck" value="True">
-                <input id="password" type="password" name="password" minlength="8" placeholder="8 characters minimum...">
+                <input type="checkbox" id="passwordCheck" name="link[linkPasswdCheck]" value="True">
+                <input id="password" type="password" name="link[linkPasswd]" minlength="8" value="" placeholder="8 characters minimum...">
+                <input type="hidden" name="link[createDate]" value="<?= (new \DateTime())->format('Y-m-d H:i:s'); ?>">
+                <input type="hidden" name="link[editDate]" value="<?= (new \DateTime())->format('Y-m-d H:i:s'); ?>">
+                <input type="hidden" name="link[lastVisitDate]" value="<?= (new \DateTime())->format('Y-m-d H:i:s'); ?>">
+                <input type="hidden" name="link[numOfVisits]" value="0">
+                <input type="hidden" name="link[lifetime]" value="<?= (new \DateTime())->format('Y-m-d H:i:s'); ?>">
+                <input type="hidden" name="link[userID]" value="0">
+                <input type="hidden" name="action" value="public-addLink"> 
             </div>
         </form>
     </div>

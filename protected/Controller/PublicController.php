@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Exception\NotFoundException;
+use App\Model\Link;
 use App\Service\Router;
 use App\Service\Templating;
 
@@ -16,8 +17,20 @@ class PublicController
         return $html;
     }
 
-    public function addLink(Templating $templating, Router $router): ?string
+    public function addLink(?array $requestLink, Templating $templating, Router $router): ?string
     {
+        if ($requestLink) {
+            $link = Link::fromArray($requestLink);
+            // @todo missing validation
+            $link->save();
+
+            $path = $router->generatePath('public-index');
+            $router->redirect($path);
+            return null;
+        } else {
+            $link = new Link();
+        }
+
         $html = $templating->Render('public/addlink.html.php', [
             'router' => $router
         ]);

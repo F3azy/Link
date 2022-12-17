@@ -27,7 +27,7 @@ switch($actionParams[0])
                 $view = $controller->login($templating, $router);
                 break;
             case 'addLink':
-                $view = $controller->addLink($templating, $router);
+                $view = $controller->addLink($_REQUEST['link'] ?? null, $templating, $router);
                 break;
             default:
                 $view = $controller->index($templating, $router);

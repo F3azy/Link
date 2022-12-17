@@ -5,7 +5,6 @@ use App\Exception\NotFoundException;
 use App\Model\Link;
 use App\Service\Router;
 use App\Service\Templating;
-use App\Model\Link;
 use App\Model\User;
 
 // Kontroler publiczny
@@ -56,6 +55,8 @@ class PublicController
             header("Location: http://www." . $link->getOgVersion());
         else
         throw new NotFoundException("(Nie znaleziono takiej strony)");
+    }
+
     public function signup(Templating $templating, Router $router): void
     {
         $userName=$_POST["usernameRegister"];
@@ -69,6 +70,7 @@ class PublicController
         // ]);
         header("location: ".$router->generatePath('public-login'));
     }
+
     public function loginUser(Templating $templating, Router $router): void
     {
         $userName=$_POST["usernameLogin"];

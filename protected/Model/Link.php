@@ -179,6 +179,8 @@ class Link
 
     public function fill($array): Link
     {
+        session_start();
+
         if (isset($array['linkID']) && ! $this->getLinkID()) {
             $this->setLinkID($array['linkID']);
         }
@@ -187,14 +189,17 @@ class Link
         }
         if (isset($array['shortVersion'])) {
             if(empty($array['shortVersion'])) {
-                $this->setShortVersion($this->createCheckShortLink());
+                $_SESSION['shortUrl'] = $this->createCheckShortLink();
+                $this->setShortVersion($_SESSION['shortUrl']);
             }
             else {
+                $_SESSION['shortUrl'] = $array['shortVersion'];
                 $this->setShortVersion($array['shortVersion']);
             }
         }
         if (isset($array['linkPasswdCheck']) && !empty($array['linkPasswdCheck']) && $array['linkPasswdCheck'] == "True") {
             if(isset($array['linkPasswd'])) {
+                $_SESSION['password'] = $array['linkPasswd'];
                 $this->setLinkPasswd($array['linkPasswd']);
             }
         }

@@ -8,9 +8,9 @@ $title = 'Home&reg;';
 $bodyClass = 'index';
 
 // If the user is not logged in redirect to the login page...
-if (!isset($_SESSION['loggedin'])) {
-    header("Location:" . $router->generatePath('public-index'));
-    exit;
+if (!isset($_SESSION['loggedin']) && ($_SESSION['role'] == "normal" || $_SESSION['role'] == "admin" )) {
+	header("Location:" .$router->generatePath('public-index'));
+	exit;
 }
 ob_start(); ?>
 
@@ -99,7 +99,6 @@ ob_start(); ?>
     <?php
     }
     ?>
-
 </body>
 <style>
     table,

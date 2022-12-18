@@ -4,7 +4,11 @@
 
 $title = 'Linke&reg;';
 $bodyClass = 'index';
-
+session_start();
+if (!isset($_SESSION['loggedin']) && ($_SESSION['loggedin'] == "normal")) {
+	header("Location:" .$router->generatePath('public-index'));
+	exit;
+}
 ob_start(); ?>
 <body>
     <h1>Linki</h1>

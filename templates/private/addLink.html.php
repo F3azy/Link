@@ -3,42 +3,17 @@
 /** @var \App\Model\Link $link */
 /** @var \App\Service\Router $router */
 
+$title = 'Linke&reg;';
+$bodyClass = 'index';
 session_start();
+if (!isset($_SESSION['loggedin']) && ($_SESSION['loggedin'] == "normal")) {
+	header("Location:" .$router->generatePath('public-index'));
+	exit;
+}
 
-// if(isset($_POST['originalLink']) && !empty($_POST['originalLink'])) {
-//     if(isset($_POST['customLink']) && !empty($_POST['customLink'])) {
-//         if(strlen($_POST['customLink']) >= 4) {
-//             $_SESSION['shortUrl'] = "www.linker.pl/" . str_replace(' ', '', $_POST['customLink']);
-//         }
-//         else {
-//             $_SESSION['Error'] = "<div>The given custom link is too short, must be at least 4 characters<div>";
-//         }
-//     }
-//     else {
-//         $_SESSION['shortUrl']  = "www.linker.pl/" . randomLink();
-//     }
-
-//     if(isset($_POST['passwordCheck']) && !empty($_POST['passwordCheck']) && $_POST['passwordCheck'] == "True") {
-//         if(isset($_POST['password']) && !empty($_POST['password'])) {
-//             if(strlen($_POST['password']) >= 8) {
-//                 $_SESSION['password'] = trim($_POST['password']);            }
-//             else {
-//                 $_SESSION['Error'] = "<div>The given password is too short, must be at least 8 characters<div>";
-//                 unset($_SESSION['shortUrl']);
-//             }
-//         }
-//     }
-
-//     header("Location: ".$router->generatePath('private-addlink'));
-//     exit;
-// } 
-
-
-
+session_start();
 $title = 'Shorten';
 $bodyClass = 'addLinkPrivate';
-
-
 ob_start(); ?>
 
     <div class="privateShorten">

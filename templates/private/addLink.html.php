@@ -11,7 +11,6 @@ if (!isset($_SESSION['loggedin']) && ($_SESSION['loggedin'] == "normal")) {
 	exit;
 }
 
-session_start();
 $title = 'Shorten';
 $bodyClass = 'addLinkPrivate';
 ob_start(); ?>
@@ -19,10 +18,10 @@ ob_start(); ?>
     <div class="privateShorten">
 
         <?php
-            if(isset($_SESSION['Error']) && !empty($_SESSION['Error'])) {
-                echo $_SESSION['Error'];
-                unset($_SESSION['Error']);
-            }
+            // if(isset($_SESSION['Error']) && !empty($_SESSION['Error'])) {
+            //     echo $_SESSION['Error'];
+            //     unset($_SESSION['Error']);
+            // }
         ?>
 
         <form action="<?= $router->generatePath('public-addLink') ?>" method="post">
@@ -43,21 +42,6 @@ ob_start(); ?>
             </div>
         </form>
     </div>
-
-
-    <?php
-        if(isset($_SESSION['shortUrl']) && !empty($_SESSION['shortUrl'])) {
-            if(isset($_SESSION['password']) && !empty($_SESSION['password'])) {
-                echo '<script>alert("Your Link: '.$_SESSION['shortUrl'].'\nYour password: '.$_SESSION['password'].'");</script>';
-                unset($_SESSION['shortUrl']);
-                unset($_SESSION['password']);
-            }
-            else {
-                echo '<script>alert("Your Link: '.$_SESSION['shortUrl'].'");</script>';
-                unset($_SESSION['shortUrl']);
-            }
-        }
-    ?>
 
     <script src="../../js/addLink.js"></script>
 

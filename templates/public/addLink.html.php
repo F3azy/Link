@@ -3,7 +3,7 @@
 /** @var \App\Model\Link $link */
 /** @var \App\Service\Router $router */
 
-session_start();
+// session_start();
 
 // if(isset($_POST['originalLink']) && !empty($_POST['originalLink'])) {
 //     if(isset($_POST['customLink']) && !empty($_POST['customLink'])) {
@@ -49,10 +49,10 @@ ob_start(); ?>
         <p>LINK-(R) is a link management service which allows you to ...</p>
 
         <?php
-            if(isset($_SESSION['Error']) && !empty($_SESSION['Error'])) {
-                echo $_SESSION['Error'];
-                unset($_SESSION['Error']);
-            }
+            // if(isset($_SESSION['Error']) && !empty($_SESSION['Error'])) {
+            //     echo $_SESSION['Error'];
+            //     unset($_SESSION['Error']);
+            // }
         ?>
 
         <form action="<?= $router->generatePath('public-addLink') ?>" method="post">
@@ -230,13 +230,6 @@ ob_start(); ?>
             </svg>
         </div>
     </div>
-
-    <?php
-        if(isset($_SESSION['shortUrl']) && !empty($_SESSION['shortUrl'])) {
-            echo '<script>alert("'.$_SESSION['shortUrl'].'");</script>';
-            unset($_SESSION['shortUrl']);
-        }
-    ?>
 
     <script src="../../js/addLink.js"></script>
     

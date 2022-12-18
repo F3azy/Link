@@ -37,7 +37,7 @@ else
                     $view = $controller->login($templating, $router);
                     break;
                 case 'addLink':
-                    $view = $controller->addLink($templating, $router);
+                    $view = $controller->addLink($_REQUEST['link'] ?? null, $templating, $router);
                     break;
                 case 'loginUser':
                     $view = $controller->loginUser($templating, $router);
@@ -61,7 +61,7 @@ else
                     $view = $controller->myLinks($templating, $router);
                     break;
                 case 'addlink':
-                    $view = $controller->addLink($templating, $router);
+                    $view = $controller->addLink($_REQUEST['link'] ?? null, $templating, $router);
                     break;
                 case 'usersettings':
                     $view = $controller->userSettings($templating, $router);

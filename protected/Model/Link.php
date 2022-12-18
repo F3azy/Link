@@ -54,7 +54,7 @@ class Link
     }
     public function getLinkPasswd(): ?string
     {
-        return $this->ogVersion;
+        return $this->linkPasswd;
     }
 
     public function setLinkPasswd(?string $linkPasswd): Link
@@ -83,9 +83,9 @@ class Link
         return $date;
     }
 
-    public function setEditDateDate(?string $editeDate): Link
+    public function setEditDateDate(?string $editDate): Link
     {
-        $date = new \DateTime($editeDate);
+        $date = new \DateTime($editDate);
         $this->editDate = $date;
 
         return $this;
@@ -141,6 +141,34 @@ class Link
     }
 
  //***********************************
+    
+    //Create a random link
+    private function randomLink() {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        $length = rand(4,10);
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        return $randomString;
+    }
+
+    private function createCheckShortLink() {
+        $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));
+        $sql = 'SELECT * FROM links WHERE shortVersion = :randString';
+        $statement = $pdo->prepare($sql);
+
+        do {
+            $randomString = $this->randomLink();
+            $statement->execute(['randString' => $randomString]);
+            $linkArray = $statement->fetch(\PDO::FETCH_ASSOC);
+        }while($linkArray);
+
+        return $randomString;
+    }
+
     public static function fromArray($array): Link
     {
         $link = new self();
@@ -158,10 +186,20 @@ class Link
             $this->setOgVersion($array['ogVersion']);
         }
         if (isset($array['shortVersion'])) {
-            $this->setShortVersion($array['shortVersion']);
+            if(empty($array['shortVersion'])) {
+                $this->setShortVersion($this->createCheckShortLink());
+            }
+            else {
+                $this->setShortVersion($array['shortVersion']);
+            }
         }
-        if (isset($array['linkPasswd'])) {
-            $this->setLinkPasswd($array['linkPasswd']);
+        if (isset($array['linkPasswdCheck']) && !empty($array['linkPasswdCheck']) && $array['linkPasswdCheck'] == "True") {
+            if(isset($array['linkPasswd'])) {
+                $this->setLinkPasswd($array['linkPasswd']);
+            }
+        }
+        else {
+            $this->setLinkPasswd("");
         }
         if (isset($array['createDate'])) {
             $this->setCreateDate($array['createDate']);

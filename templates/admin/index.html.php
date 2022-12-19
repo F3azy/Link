@@ -9,10 +9,6 @@ if (!isset($_SESSION['loggedin']) && ($_SESSION['loggedin'] != "admin")) {
     header("Location:" . $router->generatePath('public-index'));
     exit;
 }
-// if (!isset($_SESSION['loggedin']) && ($_SESSION['loggedin'] != "admin")) {
-//     header("Location:" . $router->generatePath('public-index'));
-//     exit;
-// }
 ob_start(); ?>
 
 

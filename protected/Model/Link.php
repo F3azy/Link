@@ -143,7 +143,7 @@ class Link
  //***********************************
     
     //Create a random link
-    private function randomLink() {
+    private function randomLink(): string {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -155,31 +155,48 @@ class Link
         return $randomString;
     }
 
-    private function createCheckShortLink() {
+    private function checkShortLink($link) {
         $pdo = new \PDO(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_pass'));
         $sql = 'SELECT * FROM links WHERE shortVersion = :randString';
         $statement = $pdo->prepare($sql);
 
+        $statement->execute(['randString' => $link]);
+        $linkArray = $statement->fetch(\PDO::FETCH_ASSOC);
+
+        return $linkArray;
+    }
+
+    private function createCheckShortLink(): string {
         do {
             $randomString = $this->randomLink();
-            $statement->execute(['randString' => $randomString]);
-            $linkArray = $statement->fetch(\PDO::FETCH_ASSOC);
+            $linkArray = $this->checkShortLink($randomString);
         }while($linkArray);
 
         return $randomString;
     }
 
-    public static function fromArray($array): Link
+    public static function createNewFromArray($array): ?Link
     {
         $link = new self();
-        $link->fill($array);
+        $link->fillNew($array);
+
+        if($_SESSION['Error'] != "<div>") {
+            $_SESSION['Error'] .= "</div>";
+            unset($_SESSION['shortUrl']);
+            unset($_SESSION['password']);
+            return null;
+        }
 
         return $link;
     }
 
-    public function fill($array): Link
+    public function fillNew($array): Link
     {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $_SESSION['Error'] = "<div>";
 
         if (isset($array['linkID']) && ! $this->getLinkID()) {
             $this->setLinkID($array['linkID']);
@@ -193,18 +210,85 @@ class Link
                 $this->setShortVersion($_SESSION['shortUrl']);
             }
             else {
-                $_SESSION['shortUrl'] = $array['shortVersion'];
-                $this->setShortVersion($array['shortVersion']);
+                $shortURLTemp = str_replace(' ', '', $array['shortVersion']);
+
+                if(strlen($shortURLTemp) >= 4) {
+                    if(!$this->checkShortLink($shortURLTemp)) {
+                        $_SESSION['shortUrl'] = $shortURLTemp;
+                        $this->setShortVersion($shortURLTemp);
+                    }
+                    else {
+                        $_SESSION['Error'] .= "The given custom link already exists.<br>";
+                    }
+                }
+                else {
+                    $_SESSION['Error'] .= "The given custom link is too short, must be at least 4 characters(Can't have any white-spaces)<br>";
+                }
             }
         }
         if (isset($array['linkPasswdCheck']) && !empty($array['linkPasswdCheck']) && $array['linkPasswdCheck'] == "True") {
             if(isset($array['linkPasswd'])) {
-                $_SESSION['password'] = $array['linkPasswd'];
-                $this->setLinkPasswd($array['linkPasswd']);
+                $passwordTemp = trim($array['linkPasswd']); 
+
+                if(strlen($passwordTemp) >= 8) {
+                    $_SESSION['password'] = $passwordTemp;
+                    $this->setLinkPasswd($passwordTemp);
+                }
+                else {
+                    $_SESSION['Error'] .= "The given password is too short, must be at least 8 characters(Can't have spaces at the begin and end)<br>"; 
+                }
             }
         }
         else {
             $this->setLinkPasswd("");
+        }
+        if (isset($array['createDate'])) {
+            // $this->setCreateDate($array['createDate']);
+            $this->setCreateDate((new \DateTime())->format('Y-m-d H:i:s'));
+        }
+        if (isset($array['editDate'])) {
+            // $this->setEditDateDate($array['editDate']);
+            $this->setEditDateDate((new \DateTime())->format('Y-m-d H:i:s'));
+        }
+        if (isset($array['lastVisitDate'])) {
+            // $this->setLastVisitDate($array['lastVisitDate']);
+            $this->setLastVisitDate((new \DateTime())->format('Y-m-d H:i:s'));
+        }
+        if (isset($array['numOfVisits'])) {
+            $this->setNumOfVisits($array['numOfVisits']);
+        }
+        if (isset($array['lifetime'])) {
+            // $this->setLifetime($array['lifetime']);
+            $this->setLifetime((new \DateTime())->format('Y-m-d H:i:s'));
+        }
+        if (isset($array['userID'])) {
+            $this->setUserID($array['userID']);
+        }
+
+        return $this;
+    }
+
+    public static function fromArray($array): Link
+    {
+        $link = new self();
+        $link->fill($array);
+
+        return $link;
+    }
+
+    public function fill($array): Link
+    {
+        if (isset($array['linkID']) && ! $this->getLinkID()) {
+            $this->setLinkID($array['linkID']);
+        }
+        if (isset($array['ogVersion'])) {
+            $this->setOgVersion($array['ogVersion']);
+        }
+        if (isset($array['shortVersion'])) {
+            $this->setShortVersion($array['shortVersion']);
+        }
+        if(isset($array['linkPasswd'])) {
+            $this->setLinkPasswd($array['linkPasswd']);
         }
         if (isset($array['createDate'])) {
             $this->setCreateDate($array['createDate']);

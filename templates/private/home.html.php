@@ -8,7 +8,7 @@ $title = 'Home&reg;';
 $bodyClass = 'index';
 
 // If the user is not logged in redirect to the login page...
-if (!isset($_SESSION['loggedin']) && ($_SESSION['role'] == "normal" || $_SESSION['role'] == "admin" )) {
+if (!isset($_SESSION['loggedin']) && ($_SESSION['role'] != "normal" || $_SESSION['role'] == "admin" )) {
 	header("Location:" .$router->generatePath('public-index'));
 	exit;
 }
@@ -80,7 +80,7 @@ ob_start(); ?>
     <h2>Wszystkie widoki:</h2>
     <h3>Public</h3>
     <a href="<?= $router->generatePath('public-index') ?>">Index</a><br>
-    <a href="<?= $router->generatePath('public-addLink') ?>">Add Link</a><br>
+    <a href="<?= $router->generatePath('public-addlink') ?>">Add Link</a><br>
     <a href="<?= $router->generatePath('public-login') ?>">Login</a>
     <h3>Private</h3>
     <a href="<?= $router->generatePath('private-home') ?>">Home</a><br>

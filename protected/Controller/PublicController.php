@@ -46,15 +46,36 @@ class PublicController
         return $html;
     }
 
-    public function redirect(string $redirectLink, Router $router)
+    public function redirect(string $redirectLink, Templating $templating, Router $router)
     {
         $link = Link::findByShortName($redirectLink);
         if($link == null)
             $link = Link::findByFullName($redirectLink);
         if($link != null)
-            header("Location: http://www." . $link->getOgVersion());
+        {
+            $pass = $link->getLinkPasswd();
+            if($pass == null)
+                header("Location: http://www." . $link->getOgVersion());
+            else
+            {
+                $html = $templating->Render('public/linkPassword.html.php', [
+                    'router' => $router,
+                    'passwd' => $pass,
+                    'redirectLink' => $link
+                ]);
+            }
+        }
         else
         throw new NotFoundException("(Nie znaleziono takiej strony)");
+    }
+
+    public function confirmLinkPassword(string $linkPasswd, string $redirectLink)
+    {
+        $link = Link::findByFullName($redirectLink);
+        if($link->getLinkPasswd() == $linkPasswd)
+            header("Location: http://www." . $link->getOgVersion());
+        else
+            throw new \Exception("Nieprawidłowe hasło!");
     }
 
     public function signup(Templating $templating, Router $router): void

@@ -95,7 +95,6 @@ class PublicController
         // $templating->Render('public/login.html.php', [
         //     'router' => $router
         // ]);
-        //echo "LOOOOOOOOL";
         
         header("location: ".$router->generatePath('private-home'));
     }

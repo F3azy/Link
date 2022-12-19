@@ -2,37 +2,75 @@
 /** @var \App\Service\Router $router */
 /** @var \App\Model\Link $link */
 
+$url = basename(__FILE__);
 $title = 'Linke&reg;';
 $bodyClass = 'index';
 session_start();
 if (!isset($_SESSION['loggedin']) && ($_SESSION['loggedin'] == "normal")) {
-	header("Location:" .$router->generatePath('public-index'));
-	exit;
+    header("Location:" . $router->generatePath('public-index'));
+    exit;
 }
 ob_start(); ?>
+
 <body>
-    <h1>Linki</h1>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>OG Version</th>
-            <th>Short Version</th>
-            <th>Last Visit Date</th>
-            <th>Number of visits</th>
-            <th>Lifetime</th>
-        </tr>
-        <?php foreach($links as $link): ?>
-            <tr>
-                <?php $index = $link->getLinkID(); ?>
-                <td id=<?php echo("link-" . $index . "-linkId")?>><?php echo($link->getLinkID()) ?></td>
-                <td id=<?php echo("link-" . $index . "-ogVersion")?>><?php echo($link->getOgVersion()) ?></td>
-                <td id=<?php echo("link-" . $index . "-shortVersion")?>><?php echo($link->getShortVersion()) ?></td>
-                <td id=<?php echo("link-" . $index . "-lastVisitDate")?>><?php echo($link->getLastVisitDate()) ?></td>
-                <td id=<?php echo("link-" . $index . "-numOfVisits")?>><?php echo($link->getNumOfVisits()) ?></td>
-                <td id=<?php echo("link-" . $index . "-lifeTime")?>><?php echo($link->getLifetime()) ?></td>
-            </tr>
-        <?php endforeach; ?>
-    </table>
+        <h1>Linki</h1>
+        <div class="flex flex-col">
+            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="overflow-hidden">
+                        <table class="min-w-full">
+                            <thead class="bg-white border-b">
+                                <tr>
+                                    <th scope="col">
+                                        #
+                                    </th>
+                                    <th scope="col">
+                                        Full Link
+                                    </th>
+                                    <th scope="col">
+                                        Short Version
+                                    </th>
+                                    <th scope="col">
+                                        Last Visit Date
+                                    </th>
+                                    <th scope="col">
+                                        Number of visits
+                                    </th>
+                                    <th scope="col">
+                                        Lifetime
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($links as $link): ?>
+                                <tr class="tr-item">
+                                    <?php $index = $link->getLinkID(); ?>
+                                    <td class="table-index" id=<?php echo ("link-" . $index . "-ogVersion") ?>>
+                                        <?php echo ($link->getLinkID()) ?>
+                                    </td>
+                                    <td class="table-item" id=<?php echo ("link-" . $index . "-ogVersion") ?>>
+                                        <?php echo ($link->getOgVersion()) ?>
+                                    </td>
+                                    <td class="table-item" id=<?php echo ("link-" . $index . "-shortVersion") ?>>
+                                        <?php echo ($link->getShortVersion()) ?>
+                                    </td>
+                                    <td class="table-item" id=<?php echo ("link-" . $index . "-lastVisitDate") ?>>
+                                        <?php echo ($link->getLastVisitDate()) ?>
+                                    </td>
+                                    <td class="table-item" id=<?php echo ("link-" . $index . "-numOfVisits") ?>>
+                                        <?php echo ($link->getNumOfVisits()) ?>
+                                    </td>
+                                    <td class="table-item" id=<?php echo ("link-" . $index . "-lifeTime") ?>>
+                                        <?php echo ($link->getLifetime()) ?>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
 
 <?php $main = ob_get_clean();

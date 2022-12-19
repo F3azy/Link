@@ -2,20 +2,20 @@
 
 /** @var \App\Model\Link $link */
 /** @var \App\Service\Router $router */
-
+$url = basename(__FILE__);
 $title = 'Linke&reg;';
 $bodyClass = 'index';
 session_start();
 if (!isset($_SESSION['loggedin']) && ($_SESSION['loggedin'] == "normal")) {
-	header("Location:" .$router->generatePath('public-index'));
-	exit;
+    header("Location:" . $router->generatePath('public-index'));
+    exit;
 }
 
 $title = 'Shorten';
 $bodyClass = 'addLinkPrivate';
 ob_start(); ?>
 
-    <div class="privateShorten">
+<div class="privateShorten">
 
         <?php
             if(isset($_SESSION['Error']) && !empty($_SESSION['Error'])) {
@@ -43,7 +43,7 @@ ob_start(); ?>
         </form>
     </div>
 
-    <script src="../../js/addLink.js"></script>
+<script src="../../js/addLink.js"></script>
 
 
 <?php $main = ob_get_clean();

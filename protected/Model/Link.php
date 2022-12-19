@@ -104,6 +104,7 @@ class Link
 
         return $this;
     }
+
     public function getNumOfVisits(): ?int
     {
         return $this->numOfVisits;
@@ -182,6 +183,7 @@ class Link
 
         if($_SESSION['Error'] != "<div>") {
             $_SESSION['Error'] .= "</div>";
+            unset($_SESSION['ogVersion']);
             unset($_SESSION['shortUrl']);
             unset($_SESSION['password']);
             return null;
@@ -202,7 +204,11 @@ class Link
             $this->setLinkID($array['linkID']);
         }
         if (isset($array['ogVersion'])) {
-            $this->setOgVersion($array['ogVersion']);
+            $ogURLTemp = str_replace('www.', '', $array['ogVersion']);
+            $ogURLTemp = str_replace('http://', '', $ogURLTemp);
+            $ogURLTemp = str_replace('https://', '', $ogURLTemp);
+            $_SESSION['ogVersion'] = $ogURLTemp;
+            $this->setOgVersion($ogURLTemp);
         }
         if (isset($array['shortVersion'])) {
             if(empty($array['shortVersion'])) {
@@ -242,28 +248,28 @@ class Link
         else {
             $this->setLinkPasswd("");
         }
-        if (isset($array['createDate'])) {
-            // $this->setCreateDate($array['createDate']);
+
+        // if (isset($array['createDate'])) {
             $this->setCreateDate((new \DateTime())->format('Y-m-d H:i:s'));
-        }
-        if (isset($array['editDate'])) {
-            // $this->setEditDateDate($array['editDate']);
+        // }
+        // if (isset($array['editDate'])) {
             $this->setEditDateDate((new \DateTime())->format('Y-m-d H:i:s'));
-        }
-        if (isset($array['lastVisitDate'])) {
-            // $this->setLastVisitDate($array['lastVisitDate']);
+        // }
+        // if (isset($array['lastVisitDate'])) {
             $this->setLastVisitDate((new \DateTime())->format('Y-m-d H:i:s'));
-        }
-        if (isset($array['numOfVisits'])) {
-            $this->setNumOfVisits($array['numOfVisits']);
-        }
-        if (isset($array['lifetime'])) {
-            // $this->setLifetime($array['lifetime']);
+        // }
+        // if (isset($array['numOfVisits'])) {
+            $this->setNumOfVisits(0);
+        // }
+        // if (isset($array['lifetime'])) {
             $this->setLifetime((new \DateTime())->format('Y-m-d H:i:s'));
-        }
-        if (isset($array['userID'])) {
-            $this->setUserID($array['userID']);
-        }
+        // }
+        // if (isset($array['userID'])) {
+            if(isset($_SESSION["userID"]))
+                $this->setUserID($_SESSION["userID"]);
+            else
+                $this->setUserID(0);
+        // }
 
         return $this;
     }

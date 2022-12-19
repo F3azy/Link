@@ -61,7 +61,12 @@ class PublicController
         if($link == null)
             $link = Link::findByFullName($redirectLink);
         if($link != null)
+        {
             header("Location: http://www." . $link->getOgVersion());
+            $link->setNumOfVisits($link->getNumOfVisits()+1);
+            $link->setLastVisitDate((new \DateTime())->format('Y-m-d H:i:s'));
+            $link->save();
+        }
         else
         throw new NotFoundException("(Nie znaleziono takiej strony)");
     }

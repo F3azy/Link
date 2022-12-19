@@ -28,7 +28,7 @@ ob_start(); ?>
             <div class="shortenInput">
                 <input id="originalLink" type="text" name="link[ogVersion]" placeholder="Input link to shorten..."> 
                 <input id="customLink" type="text" name="link[shortVersion]" minlength="4" placeholder="Custom link(optional)...">
-                <input type="hidden" name="link[linkPasswdCheck]" value="False">
+                <!-- <input type="hidden" name="link[linkPasswdCheck]" value="False">
                 <input type="hidden" name="link[linkPasswd]" value="">
                 <input type="hidden" name="link[createDate]" value="">
                 <input type="hidden" name="link[editDate]" value="">
@@ -36,7 +36,7 @@ ob_start(); ?>
                 <input type="hidden" name="link[numOfVisits]" value="0">
                 <input type="hidden" name="link[lifetime]" value="">
                 <input type="hidden" name="link[userID]" value="0">
-                <input type="hidden" name="action" value="public-addlink"> 
+                <input type="hidden" name="action" value="public-addlink">  -->
                 <button id="shortenLinkButton">Shorten</button>
             </div>
         </form>

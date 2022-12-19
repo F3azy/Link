@@ -21,13 +21,22 @@ class PublicController
     public function addLink(?array $requestLink, Templating $templating, Router $router): ?string
     {
         if ($requestLink) {
-            $link = Link::fromArray($requestLink);
+            $link = Link::createNewFromArray($requestLink);
             // @todo missing validation
-            $link->save();
 
-            $path = $router->generatePath('public-index');
-            $router->redirect($path);
-            return null;
+            if($link) {
+                $link->save();
+
+                $path = $router->generatePath('public-index');
+                $router->redirect($path);
+                return null;
+            }
+            else {
+                $path = $router->generatePath('public-addlink');
+                $router->redirect($path);
+                return null;
+            }
+
         } else {
             $link = new Link();
         }

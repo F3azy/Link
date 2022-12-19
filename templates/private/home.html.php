@@ -8,6 +8,18 @@ $url = basename(__FILE__);
 
 session_start();
 
+if (isset($_SESSION['loggedin'])) {
+    if($_SESSION['role'] != "normal")
+    {
+        header("Location:" . $router->generatePath('admin-index'));
+        exit;
+    }
+}
+else {
+    header("Location:" . $router->generatePath('public-index'));
+    exit;
+}
+
 $title = 'Home&reg;';
 $bodyClass = 'index';
 

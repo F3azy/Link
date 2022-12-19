@@ -5,6 +5,17 @@
 
 session_start();
 
+if (isset($_SESSION['loggedin'])) {
+    if($_SESSION['role'] == "normal")
+    {
+        header("Location:" . $router->generatePath('private-home'));
+        exit;
+    }
+    else {
+        header("Location:" . $router->generatePath('admin-index'));
+        exit;
+    }
+}
 
 $title = 'Shorten';
 $bodyClass = 'addLinkPublic';
@@ -23,20 +34,11 @@ ob_start(); ?>
         unset($_SESSION['Error']);
     }
     ?>
-    
+
         <form action="<?= $router->generatePath('public-addlink') ?>" method="post">
             <div class="shortenInput">
                 <input id="originalLink" type="text" name="link[ogVersion]" placeholder="Input link to shorten..."> 
                 <input id="customLink" type="text" name="link[shortVersion]" minlength="4" placeholder="Custom link(optional)...">
-                <!-- <input type="hidden" name="link[linkPasswdCheck]" value="False">
-                <input type="hidden" name="link[linkPasswd]" value="">
-                <input type="hidden" name="link[createDate]" value="">
-                <input type="hidden" name="link[editDate]" value="">
-                <input type="hidden" name="link[lastVisitDate]" value="">
-                <input type="hidden" name="link[numOfVisits]" value="0">
-                <input type="hidden" name="link[lifetime]" value="">
-                <input type="hidden" name="link[userID]" value="0">
-                <input type="hidden" name="action" value="public-addlink">  -->
                 <button id="shortenLinkButton">Shorten</button>
             </div>
         </form>

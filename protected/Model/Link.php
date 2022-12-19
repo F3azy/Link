@@ -178,7 +178,14 @@ class Link
 
     public static function createNewFromArray($array): ?Link
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         $link = new self();
+
+        $_SESSION['Error'] = "<div>";
+
         $link->fillNew($array);
 
         if($_SESSION['Error'] != "<div>") {
@@ -194,12 +201,6 @@ class Link
 
     public function fillNew($array): Link
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        $_SESSION['Error'] = "<div>";
-
         if (isset($array['linkID']) && ! $this->getLinkID()) {
             $this->setLinkID($array['linkID']);
         }
@@ -249,27 +250,15 @@ class Link
             $this->setLinkPasswd("");
         }
 
-        // if (isset($array['createDate'])) {
-            $this->setCreateDate((new \DateTime())->format('Y-m-d H:i:s'));
-        // }
-        // if (isset($array['editDate'])) {
-            $this->setEditDateDate((new \DateTime())->format('Y-m-d H:i:s'));
-        // }
-        // if (isset($array['lastVisitDate'])) {
-            $this->setLastVisitDate((new \DateTime())->format('Y-m-d H:i:s'));
-        // }
-        // if (isset($array['numOfVisits'])) {
-            $this->setNumOfVisits(0);
-        // }
-        // if (isset($array['lifetime'])) {
-            $this->setLifetime((new \DateTime())->format('Y-m-d H:i:s'));
-        // }
-        // if (isset($array['userID'])) {
-            if(isset($_SESSION["userID"]))
-                $this->setUserID($_SESSION["userID"]);
-            else
-                $this->setUserID(0);
-        // }
+        $this->setCreateDate((new \DateTime())->format('Y-m-d H:i:s'));
+        $this->setEditDateDate((new \DateTime())->format('Y-m-d H:i:s'));
+        $this->setLastVisitDate((new \DateTime())->format('Y-m-d H:i:s'));
+        $this->setNumOfVisits(0);
+        $this->setLifetime((new \DateTime())->format('Y-m-d H:i:s'));
+        if(isset($_SESSION["userID"]))
+            $this->setUserID($_SESSION["userID"]);
+        else
+            $this->setUserID(0);
 
         return $this;
     }

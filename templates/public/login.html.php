@@ -1,12 +1,26 @@
 <?php
 /** @var \App\Service\Router $router */
+
+session_start();
+if (isset($_SESSION['loggedin'])) {
+    if($_SESSION['role'] == "normal")
+    {
+        header("Location:" . $router->generatePath('private-home'));
+        exit;
+    }
+    else {
+        header("Location:" . $router->generatePath('admin-index'));
+        exit;
+    }
+}
+
 use App\Model\User;
 
 $title = 'Linke&reg;';
 $bodyClass = 'LoginAndRegistration';
 //$name = 'Glitterfrost';
 //$user = User::findByUserName($name);
-session_start();
+
 // echo $user->getUserID();
 // echo $user->getUserName();
 $url = basename(__FILE__);

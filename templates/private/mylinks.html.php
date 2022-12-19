@@ -9,10 +9,19 @@ $bodyClass = 'index';
 
 //jakoś ogarnąć id użytkownika i wybrać wszystkie jego linki
 session_start();
-if (!isset($_SESSION['loggedin']) && ($_SESSION['loggedin'] == "normal")) {
+
+if (isset($_SESSION['loggedin'])) {
+    if($_SESSION['role'] != "normal")
+    {
+        header("Location:" . $router->generatePath('admin-index'));
+        exit;
+    }
+}
+else {
     header("Location:" . $router->generatePath('public-index'));
     exit;
 }
+
 ob_start(); ?>
 
 <body>

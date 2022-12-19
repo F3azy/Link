@@ -5,10 +5,18 @@
 $title = 'Linke&reg;';
 $bodyClass = 'index';
 session_start();
-if (!isset($_SESSION['loggedin']) && ($_SESSION['loggedin'] != "admin")) {
+if (isset($_SESSION['loggedin'])) {
+    if($_SESSION['role'] != "admin")
+    {
+        header("Location:" . $router->generatePath('private-home'));
+        exit;
+    }
+}
+else {
     header("Location:" . $router->generatePath('public-index'));
     exit;
 }
+
 ob_start(); ?>
 
 

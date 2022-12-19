@@ -1,5 +1,20 @@
 <?php
 /** @var \App\Service\Router $router */
+
+session_start();
+if (isset($_SESSION['loggedin'])) {
+    if($_SESSION['role'] == "normal")
+    {
+        header("Location:" . $router->generatePath('private-home'));
+        exit;
+    }
+    else {
+        header("Location:" . $router->generatePath('admin-index'));
+        exit;
+    }
+}
+
+
 $url = basename(__FILE__);
 $title = 'Linke&reg;';
 $bodyClass = 'index';

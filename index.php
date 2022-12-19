@@ -10,7 +10,10 @@ $requestLink = ltrim($_SERVER["REQUEST_URI"], "/");
 if($requestLink != null && !str_contains($requestLink, "index.php"))
 {
     $controller = new \App\Controller\PublicController();
-    $controller->redirect($requestLink, $router);
+    $view = $controller->redirect($requestLink, $templating, $router);
+    if ($view) {
+        echo $view;
+    }   
 }
 else
 {
@@ -41,6 +44,9 @@ else
                     break;
                 case 'loginUser':
                     $view = $controller->loginUser($templating, $router);
+                    break;
+                case 'confirmLinkPassword':
+                    $controller->confirmLinkPassword($_REQUEST["linkPasswd"], $_REQUEST["link"]);
                     break;
                 default:
                     $view = $controller->index($templating, $router);

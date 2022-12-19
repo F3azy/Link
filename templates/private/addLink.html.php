@@ -5,8 +5,16 @@
 $url = basename(__FILE__);
 $title = 'Linke&reg;';
 $bodyClass = 'index';
+
 session_start();
-if (!isset($_SESSION['loggedin']) && ($_SESSION['loggedin'] == "normal")) {
+if (isset($_SESSION['loggedin'])) {
+    if($_SESSION['role'] != "normal")
+    {
+        header("Location:" . $router->generatePath('admin-index'));
+        exit;
+    }
+}
+else {
     header("Location:" . $router->generatePath('public-index'));
     exit;
 }
@@ -32,12 +40,6 @@ ob_start(); ?>
                 <label for="password">Protect with password:</label>
                 <input type="checkbox" id="passwordCheck" name="link[linkPasswdCheck]" value="True">
                 <input id="password" type="password" name="link[linkPasswd]" minlength="8" value="" placeholder="8 characters minimum...">
-                <input type="hidden" name="link[createDate]" value="">
-                <input type="hidden" name="link[editDate]" value="">
-                <input type="hidden" name="link[lastVisitDate]" value="">
-                <input type="hidden" name="link[numOfVisits]" value="0">
-                <input type="hidden" name="link[lifetime]" value="">
-                <input type="hidden" name="link[userID]" value="<?= $_SESSION["userID"] ?> ">
                 <input type="hidden" name="action" value="private-addlink"> 
             </div>
         </form>

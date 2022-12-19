@@ -104,6 +104,7 @@ class Link
 
         return $this;
     }
+
     public function getNumOfVisits(): ?int
     {
         return $this->numOfVisits;
@@ -177,11 +178,19 @@ class Link
 
     public static function createNewFromArray($array): ?Link
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         $link = new self();
+
+        $_SESSION['Error'] = "<div>";
+
         $link->fillNew($array);
 
         if($_SESSION['Error'] != "<div>") {
             $_SESSION['Error'] .= "</div>";
+            unset($_SESSION['ogVersion']);
             unset($_SESSION['shortUrl']);
             unset($_SESSION['password']);
             return null;
@@ -192,17 +201,15 @@ class Link
 
     public function fillNew($array): Link
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        $_SESSION['Error'] = "<div>";
-
         if (isset($array['linkID']) && ! $this->getLinkID()) {
             $this->setLinkID($array['linkID']);
         }
         if (isset($array['ogVersion'])) {
-            $this->setOgVersion($array['ogVersion']);
+            $ogURLTemp = str_replace('www.', '', $array['ogVersion']);
+            $ogURLTemp = str_replace('http://', '', $ogURLTemp);
+            $ogURLTemp = str_replace('https://', '', $ogURLTemp);
+            $_SESSION['ogVersion'] = $ogURLTemp;
+            $this->setOgVersion($ogURLTemp);
         }
         if (isset($array['shortVersion'])) {
             if(empty($array['shortVersion'])) {
@@ -242,28 +249,16 @@ class Link
         else {
             $this->setLinkPasswd("");
         }
-        if (isset($array['createDate'])) {
-            // $this->setCreateDate($array['createDate']);
-            $this->setCreateDate((new \DateTime())->format('Y-m-d H:i:s'));
-        }
-        if (isset($array['editDate'])) {
-            // $this->setEditDateDate($array['editDate']);
-            $this->setEditDateDate((new \DateTime())->format('Y-m-d H:i:s'));
-        }
-        if (isset($array['lastVisitDate'])) {
-            // $this->setLastVisitDate($array['lastVisitDate']);
-            $this->setLastVisitDate((new \DateTime())->format('Y-m-d H:i:s'));
-        }
-        if (isset($array['numOfVisits'])) {
-            $this->setNumOfVisits($array['numOfVisits']);
-        }
-        if (isset($array['lifetime'])) {
-            // $this->setLifetime($array['lifetime']);
-            $this->setLifetime((new \DateTime())->format('Y-m-d H:i:s'));
-        }
-        if (isset($array['userID'])) {
-            $this->setUserID($array['userID']);
-        }
+
+        $this->setCreateDate((new \DateTime())->format('Y-m-d H:i:s'));
+        $this->setEditDateDate((new \DateTime())->format('Y-m-d H:i:s'));
+        $this->setLastVisitDate((new \DateTime())->format('Y-m-d H:i:s'));
+        $this->setNumOfVisits(0);
+        $this->setLifetime((new \DateTime())->format('Y-m-d H:i:s'));
+        if(isset($_SESSION["userID"]))
+            $this->setUserID($_SESSION["userID"]);
+        else
+            $this->setUserID(0);
 
         return $this;
     }

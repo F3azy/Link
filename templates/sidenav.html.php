@@ -21,7 +21,7 @@ use function UI\quit;
             echo "bg-pink-500" ?>">My Links</div>
     </a>
     <a href="<?= $router->generatePath('private-addlink') ?>">
-        <div class="btn-noround menu-item <?php if ($url == "addLink.html.php")
+        <div class="btn-noround menu-item <?php if ($url == "addlink.html.php")
             echo "bg-pink-500" ?>">Add Link</div>
     </a>
     <a href="<?= $router->generatePath('private-usersettings') ?>">
@@ -34,7 +34,7 @@ use function UI\quit;
     <a href="<?= $router->generatePath('public-index') ?>">
         <div class="btn-noround menu-item">Index</div>
     </a>
-    <a href="<?= $router->generatePath('public-addLink') ?>">
+    <a href="<?= $router->generatePath('public-addlink') ?>">
         <div class="btn-noround menu-item">Add Link</div>
     </a>
     <?php

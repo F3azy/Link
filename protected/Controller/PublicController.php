@@ -63,10 +63,13 @@ class PublicController
         if($link != null)
         {
             $pass = $link->getLinkPasswd();
-            if($pass == null)
+            if($pass == null) {
                 header("Location: http://www." . $link->getOgVersion());
-            else
-            {
+                $link->setNumOfVisits($link->getNumOfVisits()+1);
+                $link->setLastVisitDate((new \DateTime())->format('Y-m-d H:i:s'));
+                $link->save();
+            }
+            else {
                 $html = $templating->Render('public/linkPassword.html.php', [
                     'router' => $router,
                     'passwd' => $pass,
@@ -76,7 +79,7 @@ class PublicController
             }
         }
         else
-        throw new NotFoundException("(Nie znaleziono takiej strony)");
+            throw new NotFoundException("(Nie znaleziono takiej strony)");
     }
 
     public function confirmLinkPassword(string $linkPasswd, string $redirectLink)

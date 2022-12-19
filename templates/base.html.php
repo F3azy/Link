@@ -128,17 +128,20 @@
     session_start();
   }
 
-  if (isset($_SESSION['shortUrl']) && !empty($_SESSION['shortUrl'])) {
-    if (isset($_SESSION['password']) && !empty($_SESSION['password'])) {
-      echo '<script>alert("Your Link: ' . $_SESSION['shortUrl'] . '\nYour password: ' . $_SESSION['password'] . '");</script>';
-      unset($_SESSION['shortUrl']);
-      unset($_SESSION['password']);
-    } else {
-      echo '<script>alert("Your Link: ' . $_SESSION['shortUrl'] . '");</script>';
-      unset($_SESSION['shortUrl']);
+    if(isset($_SESSION['shortUrl']) && !empty($_SESSION['shortUrl'])) {
+        if(isset($_SESSION['password']) && !empty($_SESSION['password'])) {
+            echo '<script>alert("Original Link: '.$_SESSION['ogVersion'].'\nYour Link: '.$_SESSION['shortUrl'].'\nYour password: '.$_SESSION['password'].'");</script>';
+            unset($_SESSION['ogVersion']);
+            unset($_SESSION['shortUrl']);
+            unset($_SESSION['password']);
+        }
+        else {
+            echo '<script>alert("Original Link: '.$_SESSION['ogVersion'].'\nYour Link: '.$_SESSION['shortUrl'].'");</script>';
+            unset($_SESSION['ogVersion']);
+            unset($_SESSION['shortUrl']);
+        }
     }
-  }
-  ?>
+?>
 
   <footer class="h-full text-center font-bold">&copy;<?= date('Y') ?> Linke&reg | Handmade with ❤️ in Szczecin, West
       Pomeranian, Poland</footer>

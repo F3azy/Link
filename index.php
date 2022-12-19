@@ -46,7 +46,7 @@ else
                     $view = $controller->loginUser($templating, $router);
                     break;
                 case 'confirmLinkPassword':
-                    $controller->confirmLinkPassword();
+                    $controller->confirmLinkPassword($_REQUEST["linkPasswd"], $_REQUEST["link"]);
                     break;
                 default:
                     $view = $controller->index($templating, $router);

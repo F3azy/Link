@@ -70,8 +70,9 @@ class PublicController
                 $html = $templating->Render('public/linkPassword.html.php', [
                     'router' => $router,
                     'passwd' => $pass,
-                    'redirectLink' => $link
+                    'redirectLink' => $link,
                 ]);
+                return $html;
             }
         }
         else

@@ -6,7 +6,7 @@ use function UI\quit;
 
 <div class="flex flex-col border-r-2 border-pink-500">
     <?php
-    if (isset($_SESSION["loggedin"]) && $_SESSION["role"] == "normal") {
+    if (isset($_SESSION["loggedin"]) && ($_SESSION["role"] == "normal" || ($_SESSION["role"] == "admin"))) {
     ?>
     <a href="<?= $router->generatePath('private-home') ?>">
         <div class="btn-noround menu-item <?php if ($url == "home.html.php")

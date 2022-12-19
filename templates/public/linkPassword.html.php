@@ -14,8 +14,8 @@ ob_start();
             <p>Podaj hasło do linka</p>
             <label for="linkPasswd"><b>Hasło</b></label>
             <input type="password" placeholder="Enter Link Password" name="linkPasswd" id="linkPasswd" required>
-            <input type="hidden" name="redirectLink" id="redirectLink" value="<?php echo($redirectLink); ?>">
-            <button type="submit" name="submit" class="loginbtn">Sprawdź hasło</button>
+            <input type="hidden" name="link" id="link" value="<?php echo($redirectLink->getOgVersion());?>">
+            <button type="submit" name="submit">Sprawdź hasło</button>
         </div>
     </form>
 </body>

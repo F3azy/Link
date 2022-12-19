@@ -1,6 +1,7 @@
 <?php
 /** @var \App\Service\Router $router */
 use App\Model\User;
+
 $title = 'Linke&reg;';
 $bodyClass = 'LoginAndRegistration';
 //$name = 'Glitterfrost';
@@ -8,15 +9,16 @@ $bodyClass = 'LoginAndRegistration';
 session_start();
 // echo $user->getUserID();
 // echo $user->getUserName();
-
-ob_start(); 
+$url = basename(__FILE__);
+ob_start();
 
 ?>
+
 <body>
     Tu będzie logowanie z opcją tworzenia konta
 
 
-    <form action="<?= $router->generatePath('public-loginUser')?>" method="post">
+    <form action="<?= $router->generatePath('public-loginUser') ?>" method="post">
         <div class="container">
             <h1>Login</h1>
             <p>Wypełnij dane, żeby się zalogować.</p>
@@ -32,7 +34,7 @@ ob_start();
         </div>
     </form>
 
-    <form action="<?= $router->generatePath('public-signup')?>" method="post">
+    <form action="<?= $router->generatePath('public-signup') ?>" method="post">
         <div class="container">
             <h1>Register</h1>
             <p>Wypełnij dane, żeby się zajerestrować.</p>

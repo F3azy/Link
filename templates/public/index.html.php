@@ -1,6 +1,6 @@
 <?php
 /** @var \App\Service\Router $router */
-
+$url = basename(__FILE__);
 $title = 'Linke&reg;';
 $bodyClass = 'index';
 

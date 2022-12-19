@@ -1,14 +1,15 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://cdn.tailwindcss.com"></script>
 
-    <style type="text/tailwindcss">
-        @tailwind base;
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style type="text/tailwindcss">
+    @tailwind base;
       @tailwind components;
       @tailwind utilities;
       @layer base {
@@ -39,26 +40,43 @@
           @apply text-lg font-bold;
         }
         a {
-          @apply no-underline cursor-pointer text-indigo-900;
+          @apply no-underline cursor-pointer;
         }
-        a:hover,
+        a:hover,  
         a:active {
-          @apply underline;
         }
         button a:hover {
           @apply no-underline;
         }
+        th {
+          @apply text-sm font-medium text-gray-900 px-6 py-4 text-left bg-white;
+        }
       }
       @layer components {
+        .tr-item {
+          @apply bg-neutral-50 border border-pink-300 transition duration-300 ease-in-out hover:bg-gray-100;
+        }
+        .table-index {
+          @apply px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900;
+        }
+        .table-item {
+          @apply text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap;
+        }
         .btn {
-          @apply px-4 py-2 text-center font-medium transition duration-150 ease-in-out cursor-pointer rounded-lg;
+          @apply px-4 py-2 text-center font-medium transition duration-150 ease-in-out cursor-pointer rounded;
+        }
+        .btn-noround {
+          @apply px-4 py-2 text-center font-medium transition duration-150 ease-in-out cursor-pointer w-40;
         }
         .btn:disabled,
         .btn[disabled] {
           @apply opacity-50 cursor-not-allowed;
         }
+        .menu-item {
+          @apply text-neutral-900 bg-neutral-50 hover:bg-pink-300;
+        }
         .btn-primary {
-          @apply text-indigo-900 bg-indigo-100 shadow shadow-indigo-900/25 hover:bg-indigo-200;
+          @apply text-neutral-50 bg-pink-500 shadow shadow-pink-900/25 hover:bg-pink-300;
         }
         .btn-secondary {
           @apply text-neutral-900 bg-neutral-50 shadow shadow-black/25 hover:bg-neutral-200;
@@ -67,7 +85,7 @@
           @apply text-neutral-900 bg-transparent border border-neutral-900 hover:bg-neutral-100;
         }
         .btn-outline-primary {
-          @apply text-indigo-900 bg-transparent border border-indigo-900 hover:bg-indigo-100;
+          @apply text-pink-900 bg-transparent border border-pink-900 hover:bg-pink-100;
         }
         .btn-danger {
           @apply text-red-900 bg-red-50 shadow shadow-red-900/25 hover:bg-red-200;
@@ -79,45 +97,51 @@
           @apply text-neutral-900 bg-transparent hover:bg-neutral-200 border-none;
         }
         .btn-flat-primary {
-          @apply text-indigo-900 bg-transparent hover:bg-indigo-200 border-none;
+          @apply text-pink-900 bg-transparent hover:bg-pink-200 border-none;
         }
         .btn-flat-danger {
           @apply text-red-900 bg-transparent hover:bg-red-200 border-none;
         }
         .input {
-          @apply w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-3 placeholder:text-neutral-400;
+          @apply w-full rounded border border-neutral-300 bg-neutral-50 px-4 py-3 placeholder:text-neutral-400;
         }
       }
     </style>
 
 </head>
-<body <?= isset($bodyClass) ? "class='$bodyClass'" : '' ?>>
-<style>
-    footer {
-        background-color: lightgray;
-    }
-    </style>
-<nav><?php require(__DIR__ . DIRECTORY_SEPARATOR . 'nav.html.php') ?></nav>
-<main><?= $main ?? null ?></main>
 
-<?php
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+<body class="bg-neutral-50">
+  <nav>
+    <?php require(__DIR__ . DIRECTORY_SEPARATOR . 'nav.html.php') ?>
+  </nav>
+  <main>
+    <div class="flex flex-row h-screen">
+      <?php require(__DIR__ . DIRECTORY_SEPARATOR . 'sidenav.html.php') ?>
+      <div class="flex flex-col gap-6 w-full items-center py-6">
+        <?= $main ?? null ?>
+      </div>
+    </div>
+  </main>
 
-    if(isset($_SESSION['shortUrl']) && !empty($_SESSION['shortUrl'])) {
-        if(isset($_SESSION['password']) && !empty($_SESSION['password'])) {
-            echo '<script>alert("Your Link: '.$_SESSION['shortUrl'].'\nYour password: '.$_SESSION['password'].'");</script>';
-            unset($_SESSION['shortUrl']);
-            unset($_SESSION['password']);
-        }
-        else {
-            echo '<script>alert("Your Link: '.$_SESSION['shortUrl'].'");</script>';
-            unset($_SESSION['shortUrl']);
-        }
-    }
-?>
+  <?php
+  if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+  }
 
-<footer>&copy;<?= date('Y') ?> Linke&reg | Handmade with ❤️ in Szczecin, West Pomeranian, Poland</footer>
+  if (isset($_SESSION['shortUrl']) && !empty($_SESSION['shortUrl'])) {
+    if (isset($_SESSION['password']) && !empty($_SESSION['password'])) {
+      echo '<script>alert("Your Link: ' . $_SESSION['shortUrl'] . '\nYour password: ' . $_SESSION['password'] . '");</script>';
+      unset($_SESSION['shortUrl']);
+      unset($_SESSION['password']);
+    } else {
+      echo '<script>alert("Your Link: ' . $_SESSION['shortUrl'] . '");</script>';
+      unset($_SESSION['shortUrl']);
+    }
+  }
+  ?>
+
+  <footer class="h-full text-center font-bold">&copy;<?= date('Y') ?> Linke&reg | Handmade with ❤️ in Szczecin, West
+      Pomeranian, Poland</footer>
 </body>
+
 </html>

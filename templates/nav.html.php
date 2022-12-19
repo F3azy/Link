@@ -1,49 +1,38 @@
 <?php
-/** @var $router \App\Service\Router */
-//session_start();
-?>
-<style>
-    .navbar {
-        background-color: lightgray;
-    }
-</style>
-<div class="navbar">
-    Linke&reg;
+use function UI\quit;
 
-    
-    <h2>Wszystkie widoki:</h2>
-    <h3>Public</h3>
-        <a href="<?= $router->generatePath('public-index') ?>">Index</a><br>
-        <a href="<?= $router->generatePath('public-addLink') ?>">Add Link</a><br>
-        <a href="<?= $router->generatePath('public-login') ?>">Login</a>
-    <?php 
-    if(isset($_SESSION["loggedin"]) && $_SESSION["role"] == "normal")
-    {
-    ?>
-        <h3>Private</h3>
-            <a href="<?= $router->generatePath('private-home') ?>">Home</a><br>
-            <a href="<?= $router->generatePath('private-links') ?>">Links</a><br>
-            <a href="<?= $router->generatePath('private-mylinks') ?>">My Links</a><br>
-            <a href="<?= $router->generatePath('private-addlink') ?>">Add Link</a><br>
-            <a href="<?= $router->generatePath('private-usersettings') ?>">User Settings</a>
-            <a href="<?= $router->generatePath('private-logOut') ?>">Log out</a>
-        <?php 
-        }
-        elseif(isset($_SESSION["loggedin"]) && ($_SESSION["role"] == "admin"))
-        {
+/** @var $router \App\Service\Router */
+?>
+<div class="flex flex-row justify-between items-center bg-neutral-50 h-20 px-6 py-2">
+    <div class="flex items-center font-bold text-pink-500">
+        <a href="
+            <?php
+            if (isset($_SESSION["loggedin"])) {
+                $router->generatePath('public-index');
+            } else {
+                $router->generatePath('private-home');
+            }
+            ?>">Linke<span class="text-2xl">&reg;</a></span>
+    </div>
+
+    <div class="flex flex-row justify-center items-center gap-1">
+        <?php
+        if (isset($_SESSION["loggedin"])) {
         ?>
-    <h3>Private</h3>
-            <a href="<?= $router->generatePath('private-home') ?>">Home</a><br>
-            <a href="<?= $router->generatePath('private-links') ?>">Links</a><br>
-            <a href="<?= $router->generatePath('private-mylinks') ?>">My Links</a><br>
-            <a href="<?= $router->generatePath('private-addlink') ?>">Add Link</a><br>
-            <a href="<?= $router->generatePath('private-usersettings') ?>">User Settings</a>
-            <a href="<?= $router->generatePath('private-logOut') ?>">Log out</a>
-    <h3>Admin</h3>
-        <a href="<?= $router->generatePath('admin-index') ?>">Admin</a>
-    <?php 
+        <div class=" btn btn-primary"><a href="<?= $router->generatePath('private-logOut') ?>">Log out</a></div>
+        <?php
+        } else {
+        ?>
+        <div class="btn btn-primary"><a href="<?= $router->generatePath('public-login') ?>">Login</a></div>
+        <?php
         }
-    ?>
-    
+        if (isset($_SESSION["loggedin"]) && ($_SESSION["role"] == "admin")) {
+        ?>
+        <div class="btn btn-primary"><a href="<?= $router->generatePath('admin-index') ?>">Admin</a></div>
+        <?php
+        }
+        ?>
+    </div>
+
 </div>
 <?php

@@ -39,7 +39,7 @@ else
                 case 'login':
                     $view = $controller->login($templating, $router);
                     break;
-                case 'addLink':
+                case 'addlink':
                     $view = $controller->addLink($_REQUEST['link'] ?? null, $templating, $router);
                     break;
                 case 'loginUser':

@@ -34,12 +34,12 @@ ob_start(); ?>
 
         <form action="<?= $router->generatePath('private-addlink') ?>" method="post">
             <div class="shortenInput">
-                <input id="originalLink" type="text" name="link[ogVersion]" placeholder="Input link to shorten..."> 
-                <input id="customLink" type="text" name="link[shortVersion]" minlength="4" placeholder="Custom link(optional)..."> 
-                <button id="shortenLinkButton">Shorten</button>
-                <label for="password">Protect with password:</label>
+                <input id="originalLink" type="text" name="link[ogVersion]" placeholder="Link do skrócenia bez 'www'"> 
+                <input id="customLink" type="text" name="link[shortVersion]" minlength="4" placeholder="Skrót"> 
+                <button id="shortenLinkButton">Skróć link</button>
+                <label for="password">Podaj hasło do linku:</label>
                 <input type="checkbox" id="passwordCheck" name="link[linkPasswdCheck]" value="True">
-                <input id="password" type="password" name="link[linkPasswd]" minlength="8" value="" placeholder="8 characters minimum...">
+                <input id="password" type="password" name="link[linkPasswd]" minlength="8" value="" placeholder="Minimum 8 znaków">
                 <input type="hidden" name="action" value="private-addlink"> 
             </div>
         </form>

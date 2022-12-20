@@ -142,7 +142,6 @@
         }
     }
 ?>
-
   <footer class="h-full text-center font-bold">&copy;<?= date('Y') ?> Linke&reg | Handmade with ❤️ in Szczecin, West
       Pomeranian, Poland</footer>
 </body>

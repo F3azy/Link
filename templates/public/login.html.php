@@ -29,9 +29,6 @@ ob_start();
 ?>
 
 <body>
-    Tu będzie logowanie z opcją tworzenia konta
-
-
     <form action="<?= $router->generatePath('public-loginUser') ?>" method="post">
         <div class="container">
             <h1>Login</h1>
@@ -44,7 +41,7 @@ ob_start();
             <input type="password" placeholder="Enter Password" name="pswLogin" id="pswLogin" required>
 
 
-            <button type="submit" name="submit" class="loginbtn">Zaloguj</button>
+            <button type="submit" name="submit" class="loginbtn btn-primary">Zaloguj</button>
         </div>
     </form>
 
@@ -65,7 +62,7 @@ ob_start();
             <hr>
 
             <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
-            <button type="submit" name="submit" class="registerbtn">Zarejestruj</button>
+            <button type="submit" name="submit" class="registerbtn btn-primary">Zarejestruj</button>
         </div>
     </form>
 </body>

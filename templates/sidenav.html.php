@@ -10,32 +10,32 @@ use function UI\quit;
     ?>
     <a href="<?= $router->generatePath('private-home') ?>">
         <div class="btn-noround menu-item <?php if ($url == "home.html.php")
-            echo "bg-pink-500" ?>">Home</div>
+            echo "bg-pink-500" ?>">Widok domowy</div>
     </a>
     <a href="<?= $router->generatePath('private-links') ?>">
         <div class="btn-noround menu-item <?php if ($url == "links.html.php")
-            echo "bg-pink-500" ?>">Links</div>
+            echo "bg-pink-500" ?>">Linki</div>
     </a>
     <a href="<?= $router->generatePath('private-mylinks') ?>">
         <div class="btn-noround menu-item <?php if ($url == "mylinks.html.php")
-            echo "bg-pink-500" ?>">My Links</div>
+            echo "bg-pink-500" ?>">Moje linki</div>
     </a>
     <a href="<?= $router->generatePath('private-addlink') ?>">
         <div class="btn-noround menu-item <?php if ($url == "addlink.html.php")
-            echo "bg-pink-500" ?>">Add Link</div>
+            echo "bg-pink-500" ?>">Dodaj link</div>
     </a>
     <a href="<?= $router->generatePath('private-usersettings') ?>">
         <div class="btn-noround menu-item <?php if ($url == "usersettings.html.php")
-            echo "bg-pink-500" ?>">Settings</div>
+            echo "bg-pink-500" ?>">Ustawienia</div>
     </a>
     <?php
     } else {
     ?>
     <a href="<?= $router->generatePath('public-index') ?>">
-        <div class="btn-noround menu-item">Index</div>
+        <div class="btn-noround menu-item">Strona główna</div>
     </a>
     <a href="<?= $router->generatePath('public-addlink') ?>">
-        <div class="btn-noround menu-item">Add Link</div>
+        <div class="btn-noround menu-item">Dodaj link anonimowo</div>
     </a>
     <?php
     }

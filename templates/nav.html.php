@@ -19,11 +19,11 @@ use function UI\quit;
         <?php
         if (isset($_SESSION["loggedin"])) {
         ?>
-        <div class=" btn btn-primary"><a href="<?= $router->generatePath('private-logOut') ?>">Log out</a></div>
+        <div class=" btn btn-primary"><a href="<?= $router->generatePath('private-logOut') ?>">Wyloguj się</a></div>
         <?php
         } else {
         ?>
-        <div class="btn btn-primary"><a href="<?= $router->generatePath('public-login') ?>">Login</a></div>
+        <div class="btn btn-primary"><a href="<?= $router->generatePath('public-login') ?>">Zaloguj się</a></div>
         <?php
         }
         if (isset($_SESSION["loggedin"]) && ($_SESSION["role"] == "admin")) {

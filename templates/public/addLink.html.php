@@ -24,9 +24,9 @@ $bodyClass = 'addLinkPublic';
 ob_start(); ?>
 
 <div class="publicShorten">
-    <h1>The best URL shorter</h1>
+    <h1>Skracacz linków</h1>
 
-    <p>LINK-(R) is a link management service which allows you to ...</p>
+    <p>LINK-(R) to usługa do zarządzania linkami, umożliwiająca ...</p>
 
     <?php
     if (isset($_SESSION['Error']) && !empty($_SESSION['Error'])) {
@@ -39,7 +39,7 @@ ob_start(); ?>
             <div class="shortenInput">
                 <input id="originalLink" type="text" name="link[ogVersion]" placeholder="Input link to shorten..."> 
                 <input id="customLink" type="text" name="link[shortVersion]" minlength="4" placeholder="Custom link(optional)...">
-                <button id="shortenLinkButton">Shorten</button>
+                <button id="shortenLinkButton">Skróć</button>
             </div>
         </form>
     </div>
@@ -47,11 +47,10 @@ ob_start(); ?>
 <div class="publicDescription">
     <div class="publicDescriptionColumn">
         <h2>
-            Shorten Links
+            Skracaj linki
         </h2>
         <p>
-            Install our free Browser Extension with over 400,000 users from the extension store to automatically shorten
-            links in one easy click! We support Chrome, Firefox, Edge and Opera.
+            Skorzystaj z naszej usługi do skracania linków, działającej na każdej przeglądarce internetowej!
         </p>
         <svg width="308" height="285" viewBox="0 0 308 285" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_7_340)">
@@ -132,11 +131,10 @@ ob_start(); ?>
 
     <div class="publicDescriptionColumn">
         <h2>
-            Track visits
+            Śledź odwiedziny
         </h2>
         <p>
-            With over 12 907 547 links shortened and tracked over 168 148 419 clicks, T.LY lets you know where users are
-            coming from. Just add a + at the end of any short url to see stats.
+            Mając około 12 907 547 linków skróconych, odnotowaliśmy około 168 148 419 kliknięć!
         </p>
         <svg width="378" height="181" viewBox="0 0 378 181" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_7_534)">
@@ -252,11 +250,10 @@ ob_start(); ?>
 
     <div class="publicDescriptionColumn">
         <h2>
-            Add tags
+            Ustaw personalizowany skrót
         </h2>
         <p>
-            With over 12 907 547 links shortened and tracked over 168 148 419 clicks, T.LY lets you know where users are
-            coming from. Just add a + at the end of any short url to see stats.
+            Wymyśl i stwórz swój personalny, 4-literowy skrót linku.
         </p>
         <svg width="338" height="281" viewBox="0 0 338 281" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_7_418)">

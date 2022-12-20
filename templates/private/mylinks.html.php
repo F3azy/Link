@@ -35,22 +35,22 @@ ob_start(); ?>
                         <thead class="bg-white border-b">
                             <tr>
                                 <th scope="col">
-                                    #
+                                    ID Linku
                                 </th>
                                 <th scope="col">
-                                    Full Link
+                                    Pełna nazwa
                                 </th>
                                 <th scope="col">
-                                    Short Version
+                                    Nazwa skrócona
                                 </th>
                                 <th scope="col">
-                                    Last Visit Date
+                                    Data ostatniej wizyty
                                 </th>
                                 <th scope="col">
-                                    Number of visits
+                                    Liczba odwiedzin
                                 </th>
                                 <th scope="col">
-                                    Lifetime
+                                    Czas życia linku
                                 </th>
                             </tr>
                         </thead>

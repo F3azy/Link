@@ -37,9 +37,9 @@ ob_start(); ?>
 
         <form action="<?= $router->generatePath('public-addlink') ?>" method="post">
             <div class="shortenInput">
-                <input id="originalLink" type="text" name="link[ogVersion]" placeholder="Input link to shorten..."> 
-                <input id="customLink" type="text" name="link[shortVersion]" minlength="4" placeholder="Custom link(optional)...">
-                <button id="shortenLinkButton">Skróć</button>
+                <input id="originalLink" type="text" name="link[ogVersion]" placeholder="Link do strony"> 
+                <input id="customLink" type="text" name="link[shortVersion]" minlength="4" placeholder="Skrót linku">
+                <button id="shortenLinkButton" class="button btn-primary">Skróć</button>
             </div>
         </form>
     </div>
